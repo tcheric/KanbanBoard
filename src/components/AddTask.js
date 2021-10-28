@@ -11,7 +11,7 @@ const AddTask = ({ onAdd }) => {
       alert('Please enter a task')
       return
     }
-    onAdd({ name, day, reminder }) //this is addTask object
+    onAdd({ name, day, reminder }) //this is an addTask object
     setName('')
     setDay('')
     setReminder(false)
