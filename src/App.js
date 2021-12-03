@@ -7,59 +7,54 @@ const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
 
-  useEffect(() => {
-    const getTasks = async() => {
-      const tasksFromServer = await fetchTasks()
-      setTasks(tasksFromServer)
-    }
-
-    getTasks()
-  }, [])
+  useEffect(() => {fetchTasks()}, [])
 
   const fetchTasks = async() => {
     const res = await fetch('http://localhost:5000/tasks')
-    const data = await res.json()
-    return data
-  } 
+    const tasksFromServer = await res.json()
+    setTasks(tasksFromServer)
+  }
 
-  const addTask = async(newTask) => {
-    const res = await fetch('http://localhost:5000/tasks/{id}', {
+  const addTask = async (newTask) => {
+    console.log(newTask)
+    const res = await fetch('http://localhost:5000/tasks', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(newTask),
     })
 
     const data = await res.json()
-
-    const id = Math.floor(Math.random() * 1000)
-    const newTaskWithID = { id, ...data }
-
-    console.log(newTaskWithID)
     console.log(data)
-
-    setTasks([...tasks, newTaskWithID])
-
-    // id is created for us 
-    // console.log(newTask)
-    // const id = Math.floor(Math.random() * 1000)
-    // const newTaskWithID = { id, ...newTask }
-    // setTasks([ ...tasks, newTaskWithID ])
-    // console.log(tasks)
+    fetchTasks()
   }
 
   const deleteTask = async(id) => {
-    await fetch(`https://localhost:5000/tasks/${id}`, {method: 'DELETE'})
-    setTasks(tasks.filter((tasks) => tasks.id !== id))
+    await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'})
+    //setTasks(tasks.filter((tasks) => tasks.id !== id))
+    fetchTasks()
   }
 
-  const toggleReminder = (id) => {
-    setTasks(tasks.map((task) => (
-      task.id === id 
-      ? {...task, reminder: !task.reminder} 
-      : task
-    )))
+  const toggleReminder = async(id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
+    const item = await res.json()
+    const toggledItem = {...item, reminder: !item.reminder}
+
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(toggledItem),
+    })
+    fetchTasks()
+
+    // setTasks(tasks.map((task) => (
+    //   task.id === id 
+    //   ? {...task, reminder: !task.reminder} 
+    //   : task
+    // )))
   }
 
   const toggleAddTask = () => {
@@ -78,5 +73,7 @@ const App = () => {
     </div>
   );
 }
+
+// *If showAddTask is true, then <...> will execute. "short circuit evaluation"
 
 export default App;
