@@ -4,6 +4,8 @@ const AddTask = ({ onAdd }) => {
   const [name, setName] = useState('')
   const [day, setDay] = useState('')
   const [reminder, setReminder] = useState(false)
+  const [board, setBoard] = useState(0)
+
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -11,10 +13,11 @@ const AddTask = ({ onAdd }) => {
       alert('Please enter a task')
       return
     }
-    onAdd({ name, day, reminder }) //this is an addTask object
+    onAdd({ name, day, reminder, board }) //this is an addTask object
     setName('')
     setDay('')
     setReminder(false)
+    setBoard(0)
   }
 
   return (

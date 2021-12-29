@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Ubuntu");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Work+Sans");
+
 
 * {
   box-sizing: border-box;
@@ -7,16 +11,16 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Ubuntu', 'Poppins', sans-serif;
 }
 
 .container {
   max-width: 500px;
-  margin: 30px auto;
+  margin: 5px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid rgb(21, 54, 82);
-  padding: 30px;
+  border: 1px solid rgb(155, 158, 163);
+  padding: 15px;
   border-radius: 5px;
 }
 
@@ -24,7 +28,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  width: 30%;
+  margin: 0 auto;
+  /* margin-bottom: 20px;
+  padding-left: 700px;
+  padding-right: 700px; */
 }
 
 .btn {
@@ -72,7 +80,9 @@ body {
 }
 
 .add-form {
-  margin-bottom: 40px;
+  padding: 0px;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .form-control {
@@ -99,6 +109,7 @@ body {
 
 .form-control-check label {
   flex: 1;
+  margin-right: 100px
 }
 
 .form-control-check input {
@@ -106,7 +117,26 @@ body {
   height: 20px;
 }
 
+.float-container {
+  border: 3px solid #fff;
+  padding: 20px;
+}
+
+.float-child {
+  width: 33%;
+  float: left;
+  /* border: 1px solid rgb(21, 54, 82);
+  border-radius: 5px; */
+  padding: 20px;
+}
+
 footer {
   margin-top: 30px;
   text-align: center;
+}
+
+.unweighted {
+  /* font-weight: normal; */
+  text-align: center;
+  padding-bottom: 7px;
 }

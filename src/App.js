@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
+import Board from './components/Board'
 import Header from './components/Header'
-import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
-
   useEffect(() => {fetchTasks()}, [])
 
   const fetchTasks = async() => {
@@ -15,6 +14,10 @@ const App = () => {
     setTasks(tasksFromServer)
   }
 
+  const toggleAddTask = () => {
+    setShowAddTask(!showAddTask)
+  }  
+  
   const addTask = async (newTask) => {
     console.log(newTask)
     const res = await fetch('http://localhost:5000/tasks', {
@@ -24,7 +27,6 @@ const App = () => {
       },
       body: JSON.stringify(newTask),
     })
-
     const data = await res.json()
     console.log(data)
     fetchTasks()
@@ -32,7 +34,6 @@ const App = () => {
 
   const deleteTask = async(id) => {
     await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'})
-    //setTasks(tasks.filter((tasks) => tasks.id !== id))
     fetchTasks()
   }
 
@@ -49,31 +50,26 @@ const App = () => {
       body: JSON.stringify(toggledItem),
     })
     fetchTasks()
-
-    // setTasks(tasks.map((task) => (
-    //   task.id === id 
-    //   ? {...task, reminder: !task.reminder} 
-    //   : task
-    // )))
   }
 
-  const toggleAddTask = () => {
-    setShowAddTask(!showAddTask)
-  }  
+  const sortTasks = ( board ) => { 
+    let sortedTasks = []
+    tasks.forEach(task => {
+      if (task.board === board) sortedTasks.push(task)
+    })
+    return sortedTasks
+  }
 
   return (
-    <div className="container">
+    <div className={`float-container Parent`}>
       <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
       {showAddTask && <AddTask onAdd={addTask}/>}
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/>
-      ) : (
-        'No tasks'
-      )}
+      <Board tasks={sortTasks(0)} onDelete={deleteTask} onToggle={toggleReminder} name="To-do"/> 
+      <Board tasks={sortTasks(1)} onDelete={deleteTask} onToggle={toggleReminder} name="Doing"/> 
+      <Board tasks={sortTasks(2)} onDelete={deleteTask} onToggle={toggleReminder} name="Done"/>     
     </div>
   );
 }
-
 // *If showAddTask is true, then <...> will execute. "short circuit evaluation"
 
 export default App;
