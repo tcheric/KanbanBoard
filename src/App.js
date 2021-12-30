@@ -60,13 +60,63 @@ const App = () => {
     return sortedTasks
   }
 
+  const moveBackwards = async(id) => { 
+    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
+    const item = await res.json()
+    const movedItem = (item.board > 0) ? {...item, board: (item.board - 1)} : item
+
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(movedItem),
+    })
+    fetchTasks()
+  }
+
+  const moveForward = async(id) => {  
+    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
+    const item = await res.json()
+    const movedItem = (item.board < 2) ? {...item, board: (item.board + 1)} : item
+    
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(movedItem),
+    })
+    fetchTasks()
+  }
+
   return (
     <div className={`float-container Parent`}>
       <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
       {showAddTask && <AddTask onAdd={addTask}/>}
-      <Board tasks={sortTasks(0)} onDelete={deleteTask} onToggle={toggleReminder} name="To-do"/> 
-      <Board tasks={sortTasks(1)} onDelete={deleteTask} onToggle={toggleReminder} name="Doing"/> 
-      <Board tasks={sortTasks(2)} onDelete={deleteTask} onToggle={toggleReminder} name="Done"/>     
+      <Board 
+        tasks={sortTasks(0)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        name="To-do"
+      /> 
+      <Board 
+        tasks={sortTasks(1)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        name="Doing"
+      /> 
+      <Board 
+        tasks={sortTasks(2)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        name="Done"/>     
     </div>
   );
 }
