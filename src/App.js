@@ -5,95 +5,88 @@ import AddTask from './components/AddTask'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
-  const [tasks, setTasks] = useState([])
-  useEffect(() => {fetchTasks()}, [])
+  const [tasks, setTasks] = useState(() => {
+    // A. Called on initial state on page (re)load
+    const stringTasks = localStorage.getItem("tasks")
+    const tasksFromLocal = JSON.parse(stringTasks)
+    if (tasksFromLocal == null) {
+      return []
+    } else {
+      return tasksFromLocal
+    }
+  })
+  useEffect(() => {updateTasks()}, []) // does this even need to be a useeffect?
 
-  const fetchTasks = async() => {
-    const res = await fetch('http://localhost:5000/tasks')
-    const tasksFromServer = await res.json()
-    setTasks(tasksFromServer)
+  const updateTasks = () => {
+    // B. called to update state
+    const stringTasks = localStorage.getItem("tasks")
+    const tasksFromLocal = JSON.parse(stringTasks)
+    setTasks(tasksFromLocal)
   }
 
   const toggleAddTask = () => {
     setShowAddTask(!showAddTask)
   }  
   
-  const addTask = async (newTask) => {
-    console.log(newTask)
-    const res = await fetch('http://localhost:5000/tasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newTask),
-    })
-    const data = await res.json()
-    console.log(data)
-    fetchTasks()
+  const addTask = newTask => {
+    // C. called to add task to local
+    // if tasks is null, if it isn't null - also im pretty sure local storage and usestate are alwways the same
+    const newTaskInArray = (tasks == null) ? [newTask] : [...tasks, newTask]
+    localStorage.setItem("tasks", JSON.stringify(newTaskInArray))
+    updateTasks()
   }
 
-  const deleteTask = async(id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'})
-    fetchTasks()
+  const deleteTask = id => {
+    // D. called to delete task from local
+    const updatedTasks = tasks.filter(item => item.id !== id)
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
   }
 
-  const toggleReminder = async(id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
-    const item = await res.json()
-    const toggledItem = {...item, reminder: !item.reminder}
-
-    await fetch(`http://localhost:5000/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(toggledItem),
+  const toggleReminder = id => {
+    // E. changes reminder for item with 'id'
+    const updatedTasks = tasks.map(item => {
+      if (item.id === id) {
+        (item.reminder = !item.reminder)
+      }
+      return item
     })
-    fetchTasks()
+    console.log(tasks)
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
   }
 
-  const sortTasks = ( board ) => { 
-    let sortedTasks = []
-    tasks.forEach(task => {
-      if (task.board === board) sortedTasks.push(task)
-    })
-    return sortedTasks
+  const sortTasks =  board => { 
+    if (tasks == null) {
+      return []
+    } else {
+      const sortedTasks = tasks.filter(item => item.board === board)
+      return sortedTasks
+    }
   }
 
-  const moveBackwards = async(id) => { 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
-    const item = await res.json()
-    const movedItem = (item.board > 0) ? {...item, board: (item.board - 1)} : item
-
-    await fetch(`http://localhost:5000/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(movedItem),
+  const moveBackwards = id => { 
+    const updatedTasks = tasks.map(item => {
+      if (item.id === id && item.board > 0) (item.board--)
+      return item
     })
-    fetchTasks()
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
   }
 
-  const moveForward = async(id) => {  
-    const res = await fetch(`http://localhost:5000/tasks/${id}`) // by default GET
-    const item = await res.json()
-    const movedItem = (item.board < 2) ? {...item, board: (item.board + 1)} : item
-    
-    await fetch(`http://localhost:5000/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(movedItem),
+  const moveForward = id => {  
+    const updatedTasks = tasks.map(item => {
+      if (item.id === id && item.board < 2) (item.board++)
+      return item
     })
-    fetchTasks()
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
   }
 
   return (
     <div className={`float-container Parent`}>
       <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
-      {showAddTask && <AddTask onAdd={addTask}/>}
+      {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
       <Board 
         tasks={sortTasks(0)} 
         onDelete={deleteTask} 

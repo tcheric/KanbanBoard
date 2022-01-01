@@ -19,7 +19,7 @@ const Header = ({ title, onToggle, showAdd }) => {
 }
 
 Header.defaultProps = {
-  title: 'Kanban Board',
+  title: 'Kanban Board.',
 }
 
 Header.propTypes = {

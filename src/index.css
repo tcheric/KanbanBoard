@@ -28,8 +28,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30%;
+  width: 25%;
   margin: 0 auto;
+}
+
+.header h1{
+  padding-right: 10px;
 }
 
 .btn {

@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 
-const AddTask = ({ onAdd }) => {
+const AddTask = ({ onAdd, tasks }) => {
   const [name, setName] = useState('')
   const [day, setDay] = useState('')
   const [reminder, setReminder] = useState(false)
-  const [board, setBoard] = useState(0)
-
+  const board = 0
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -13,11 +12,21 @@ const AddTask = ({ onAdd }) => {
       alert('Please enter a task')
       return
     }
-    onAdd({ name, day, reminder, board }) //this is an addTask object
+    // calculate new id
+    let unusedID = 0
+    if (!(tasks == null)) {
+      for (const item of tasks) {
+        if (item.id > unusedID) (unusedID = item.id)
+      }
+      unusedID++
+    }
+    // assign id
+    const id = unusedID
+
+    onAdd({ name, day, reminder, board, id }) //this is an addTask object
     setName('')
     setDay('')
     setReminder(false)
-    setBoard(0)
   }
 
   return (
@@ -35,7 +44,7 @@ const AddTask = ({ onAdd }) => {
         <label>Day and Time</label>
         <input 
           type='text' 
-          placeholder='Enter Day and Time' 
+          placeholder='Enter Time' 
           value={day} 
           onChange={(e) => setDay(e.target.value)}
         />
