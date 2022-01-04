@@ -2,16 +2,25 @@
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 @import url("https://fonts.googleapis.com/css?family=Work+Sans");
+/* @import url("munkey.png"); */
 
 
-* {
+
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 body {
   font-family: 'Ubuntu', 'Poppins', sans-serif;
+  height: 100%;
+  margin: 0;
+  background-image: url("./pointing_meme_flat2.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 .container {
@@ -22,6 +31,8 @@ body {
   border: 1px solid rgb(155, 158, 163);
   padding: 15px;
   border-radius: 5px;
+  background-color: rgba(253, 253, 253, 0.97);
+  
 }
 
 .header {
@@ -68,6 +79,7 @@ body {
   margin: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .task.reminder {
@@ -78,6 +90,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.task h5 {
+  margin: 0;
+  padding: 0;
 }
 
 .add-form {
@@ -121,12 +141,14 @@ body {
 .float-container {
   border: 3px solid #fff;
   padding: 20px;
+  /* position: relative;
+  width: 100%; */
 }
 
 .float-child {
-  width: 33%;
+  width: 29%;
   float: left;
-  padding: 20px;
+  padding: 2%;
 }
 
 footer {
@@ -139,3 +161,12 @@ footer {
   padding-bottom: 7px;
 }
 
+.image {
+  margin-left: 400px;
+  margin-bottom: -450px; 
+  width: 15%;
+  height: 15%;
+  position: sticky;
+  bottom: 0px;
+  left: 0px;
+}

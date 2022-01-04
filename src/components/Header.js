@@ -5,7 +5,7 @@ const Header = ({ title, onToggle, showAdd }) => {
   
   return (
     <header className='header'>
-      <h1> { title } </h1>
+      <h1><u> { title } </u></h1>
       <Button 
         color={showAdd ? 'darkGray' : 'steelBlue'} 
         text={showAdd ? 'HIDE' : 'ADD'} 

@@ -6,7 +6,7 @@ const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, name }) => {
   return (
     <div className="float-child">
       <div className="container">
-        <h2>{name}</h2>
+        <h2><u>{name}</u></h2>
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <Task 

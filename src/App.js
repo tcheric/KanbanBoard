@@ -84,7 +84,7 @@ const App = () => {
   }
 
   return (
-    <div className={`float-container Parent`}>
+    <div className={`float-container`}>
       <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
       {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
       <Board 
@@ -93,7 +93,7 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
-        name="To-do"
+        name="To-do:"
       /> 
       <Board 
         tasks={sortTasks(1)} 
@@ -101,7 +101,7 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
-        name="Doing"
+        name="Doing:"
       /> 
       <Board 
         tasks={sortTasks(2)} 
@@ -109,7 +109,9 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
-        name="Done"/>     
+        name="Done:"
+      />
+      {/* <img className="image" src={munkey} alt="munkey"/>      */}
     </div>
   );
 }
