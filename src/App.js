@@ -4,6 +4,7 @@ import Header from './components/Header'
 import AddTask from './components/AddTask'
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false)
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState(() => {
     // A. Called on initial state on page (re)load
@@ -15,6 +16,7 @@ const App = () => {
       return tasksFromLocal
     }
   })
+  /* This useEffect has [] as 2nd arg, so is only called after first mount/render */
   useEffect(() => {updateTasks()}, []) // does this even need to be a useeffect?
 
   const updateTasks = () => {
@@ -84,34 +86,35 @@ const App = () => {
   }
 
   return (
-    <div className={`float-container`}>
-      <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
-      {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
-      <Board 
-        tasks={sortTasks(0)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        name="To-do:"
-      /> 
-      <Board 
-        tasks={sortTasks(1)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        name="Doing:"
-      /> 
-      <Board 
-        tasks={sortTasks(2)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        name="Done:"
-      />
-      {/* <img className="image" src={munkey} alt="munkey"/>      */}
+    <div className='app'>
+      <div className={`float-container`} data-theme={ darkMode ? 'dark' : 'light'}>
+        <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
+        {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
+        <Board 
+          tasks={sortTasks(0)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          name="To-do:"
+        /> 
+        <Board 
+          tasks={sortTasks(1)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          name="Doing:"
+        /> 
+        <Board 
+          tasks={sortTasks(2)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          name="Done:"
+        />
+      </div>
     </div>
   );
 }
