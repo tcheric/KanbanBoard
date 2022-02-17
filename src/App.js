@@ -4,8 +4,8 @@ import Header from './components/Header'
 import AddTask from './components/AddTask'
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false)
   const [showAddTask, setShowAddTask] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
   const [tasks, setTasks] = useState(() => {
     // A. Called on initial state on page (re)load
     const stringTasks = localStorage.getItem("tasks")
@@ -16,8 +16,12 @@ const App = () => {
       return tasksFromLocal
     }
   })
+
   /* This useEffect has [] as 2nd arg, so is only called after first mount/render */
-  useEffect(() => {updateTasks()}, []) // does this even need to be a useeffect?
+  useEffect(() => {
+    document.body.classList.toggle("light-mode-body")
+    console.log('light mode first toggle')
+  }, [])
 
   const updateTasks = () => {
     // B. called to update state
@@ -25,6 +29,20 @@ const App = () => {
     const tasksFromLocal = JSON.parse(stringTasks)
     setTasks(tasksFromLocal)
   }
+
+  const toggleDarkMode = () => {
+    localStorage.setItem("darkMode", JSON.stringify(!darkMode))
+    setDarkMode(!darkMode)
+    if (darkMode) {
+      document.body.classList.toggle("light-mode-body");
+      document.body.classList.toggle("dark-mode-body");
+      console.log('dark mode using classlist')
+    } else {
+      document.body.classList.toggle("light-mode-body");
+      document.body.classList.toggle("dark-mode-body");
+      console.log('light mode using classlist')
+    }
+  }  
 
   const toggleAddTask = () => {
     setShowAddTask(!showAddTask)
@@ -86,35 +104,41 @@ const App = () => {
   }
 
   return (
-    <div className='app'>
-      <div className={`float-container`} data-theme={ darkMode ? 'dark' : 'light'}>
-        <Header onToggle={toggleAddTask} showAdd={showAddTask}/>
-        {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
-        <Board 
-          tasks={sortTasks(0)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          name="To-do:"
-        /> 
-        <Board 
-          tasks={sortTasks(1)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          name="Doing:"
-        /> 
-        <Board 
-          tasks={sortTasks(2)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          name="Done:"
-        />
-      </div>
+    <div className={`float-container`}>
+      <Header 
+        toggleAddTask={toggleAddTask} 
+        showAdd={showAddTask} 
+        toggleDarkMode={toggleDarkMode}
+        darkMode={darkMode}
+      />
+      {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={darkMode}/>}
+      <Board 
+        tasks={sortTasks(0)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        darkMode={darkMode}
+        name="To-do:"
+      /> 
+      <Board 
+        tasks={sortTasks(1)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        darkMode={darkMode}
+        name="Doing:"
+      /> 
+      <Board 
+        tasks={sortTasks(2)} 
+        onDelete={deleteTask} 
+        onToggle={toggleReminder} 
+        onBackwards={moveBackwards} 
+        onForward={moveForward} 
+        darkMode={darkMode}
+        name="Done:"
+      />
     </div>
   );
 }

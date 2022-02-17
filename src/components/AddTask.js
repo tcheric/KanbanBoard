@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const AddTask = ({ onAdd, tasks }) => {
+const AddTask = ({ onAdd, tasks, darkMode }) => {
   const [name, setName] = useState('')
   const [day, setDay] = useState('')
   const [reminder, setReminder] = useState(false)
@@ -31,25 +31,28 @@ const AddTask = ({ onAdd, tasks }) => {
 
   return (
     <form className='add-form' onSubmit={onSubmit}>
-      <div className='form-control'>
+      <div className={`form-control ${darkMode ? "dark" : "light"}`}>
         <label>Task:</label>
         <input 
           type='text' 
           placeholder=' Enter Task' 
           value = {name} 
           onChange={(e) => setName(e.target.value)}
+          className={`input ${darkMode ? "dark" : "light"}`}
         />
       </div>
-      <div className='form-control'>
+      <div className={`form-control ${darkMode ? "dark" : "light"}`}>
         <label>Day and Time:</label>
         <input 
           type='text' 
           placeholder=' Enter Time' 
           value={day} 
           onChange={(e) => setDay(e.target.value)}
+          className={`input ${darkMode ? "dark" : "light"}`}
         />
       </div>
-      <div className='form-control form-control-check'>
+      {/* <div className='form-control form-control-check'> */}
+      <div className={`form-control ${darkMode ? "dark" : "light"} form-control-check`}>
         <label>Reminder:</label>
         <input 
           type='checkbox' 
@@ -59,7 +62,7 @@ const AddTask = ({ onAdd, tasks }) => {
         />
       </div>
       <input 
-        type='submit' value='Save Task' className='btn btn-block'
+        type='submit' value='Save Task' className={`btn ${darkMode ? "dark" : "light"} btn-block`}
       />
     </form>
   )
