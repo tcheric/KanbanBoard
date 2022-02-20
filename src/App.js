@@ -5,7 +5,7 @@ import AddTask from './components/AddTask'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+
   const [tasks, setTasks] = useState(() => {
     // A. Called on initial state on page (re)load
     const stringTasks = localStorage.getItem("tasks")
@@ -17,10 +17,19 @@ const App = () => {
     }
   })
 
-  /* This useEffect has [] as 2nd arg, so is only called after first mount/render */
+  const [darkMode, setDarkMode] = useState(() => {
+    // A. Called on initial state on page (re)load
+    const stringDarkMode = localStorage.getItem("darkMode")
+    const DarkModeFromLocal = JSON.parse(stringDarkMode)
+    return DarkModeFromLocal
+  })
+
   useEffect(() => {
-    document.body.classList.toggle("light-mode-body")
-    console.log('light mode first toggle')
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.toggle("dark-mode-body");
+    } else {
+      document.body.classList.toggle("light-mode-body");
+    }
   }, [])
 
   const updateTasks = () => {
@@ -33,14 +42,14 @@ const App = () => {
   const toggleDarkMode = () => {
     localStorage.setItem("darkMode", JSON.stringify(!darkMode))
     setDarkMode(!darkMode)
-    if (darkMode) {
+    if (!darkMode) {
       document.body.classList.toggle("light-mode-body");
       document.body.classList.toggle("dark-mode-body");
-      console.log('dark mode using classlist')
+      console.log('set to dark mode using classlist')
     } else {
       document.body.classList.toggle("light-mode-body");
       document.body.classList.toggle("dark-mode-body");
-      console.log('light mode using classlist')
+      console.log('set to light mode using classlist')
     }
   }  
 
@@ -50,7 +59,6 @@ const App = () => {
   
   const addTask = newTask => {
     // C. called to add task to local
-    // if tasks is null, if it isn't null - also im pretty sure local storage and usestate are alwways the same
     const newTaskInArray = (tasks == null) ? [newTask] : [...tasks, newTask]
     localStorage.setItem("tasks", JSON.stringify(newTaskInArray))
     updateTasks()
