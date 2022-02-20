@@ -7,7 +7,7 @@ A Kanban Board application where a user can write down tasks in a "To-do", "Doin
 ## User Stories
 
 -   [ ] User can see an input field where he can type in a to-do item
--   [ ] By pressing enter (or a button), the User can submit the To-do item and can see it being added to a list of To-do's
+-   [ ] By pressing enter (or a button), the user can submit the To-do item and can see it being added to a list of To-do's
 -   [ ] User can mark a task in "To-do" as "Doing"
 -   [ ] User can mark a task in "Doing" as "Done"
 -   [ ] User can remove a task by pressing on a button
@@ -15,4 +15,4 @@ A Kanban Board application where a user can write down tasks in a "To-do", "Doin
 
 ## Bonus features
 
--   Not yet
+-   [ ] User can toggle dark mode
