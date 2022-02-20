@@ -39,10 +39,10 @@ body {
   margin: 5px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid rgb(68, 70, 75);
+  border: 1px solid rgb(55, 61, 75);
   padding: 15px;
   border-radius: 5px;
-  background-color: rgb(24, 29, 36);
+  background-color: rgba(20, 24, 34, 0.97);
   color: rgb(230, 230, 230);
 }
 
