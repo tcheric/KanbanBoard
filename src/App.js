@@ -18,7 +18,7 @@ const App = () => {
   })
 
   const [darkMode, setDarkMode] = useState(() => {
-    // A. Called on initial state on page (re)load
+    // darkMode is a string, not a bool
     const stringDarkMode = localStorage.getItem("darkMode")
     const DarkModeFromLocal = JSON.parse(stringDarkMode)
     return DarkModeFromLocal
@@ -26,6 +26,7 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.getItem("darkMode") === "true") {
+      console.log(localStorage.getItem("darkMode"))
       document.body.classList.toggle("dark-mode-body");
     } else {
       document.body.classList.toggle("light-mode-body");

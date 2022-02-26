@@ -42,7 +42,7 @@ body {
   border: 1px solid rgb(55, 61, 75);
   padding: 15px;
   border-radius: 5px;
-  background-color: rgba(20, 24, 34, 0.97);
+  background-color: rgba(21, 24, 32, 0.97);
   color: rgb(230, 230, 230);
 }
 
@@ -113,6 +113,7 @@ span {
 
 .task.dark {
   background-color: #232323;
+  border: 1px solid #181818;
 }
 
 .task.reminder.light {
@@ -123,6 +124,9 @@ span {
 .task.reminder.dark {
   border-left: 5px solid rgb(58, 123, 167);
   background-color: #232323;
+  border-top: 1px solid #181818;
+  border-right: 1px solid #181818;
+  border-bottom: 1px solid #181818;
 }
 
 .task h3 {
