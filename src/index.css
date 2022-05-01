@@ -54,12 +54,18 @@ span {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 25%;
+  width: 40%;
+  min-width: 360px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .header h1{
   padding-right: 10px;
+}
+
+.header .buttons{
+  display: inline-flex;
 }
 
 .btn {
@@ -68,12 +74,16 @@ span {
   color: #fff;
   border: none;
   padding: 10px 20px;
-  margin: 5px;
+  margin: 8px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
   font-size: 13px;
   font-family: 'Ubuntu';
+  max-height: 35px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 .btn.dark {
@@ -109,6 +119,7 @@ span {
   padding: 10px 20px;
   cursor: pointer;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .task.dark {
@@ -136,11 +147,30 @@ span {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-weight: normal;
+}
+
+.task p {
+  /* color: antiquewhite; */
+  margin: 0;
+}
+
+.task input {
+  color: rgb(0, 140, 200);
+  border: none;
+  outline: none;
+  background-color: rgb(20, 20, 20);
+  /* background-color: #232323; */
+  width: 50%;
+  border-radius: 3px;
+  font-size: large;
 }
 
 .task h5 {
   margin: 0;
   padding: 0;
+  font-weight: normal;
+  /* color: antiquewhite; */
 }
 
 .add-form {
@@ -189,6 +219,8 @@ span {
 .float-container {
   /* border: 3px solid #fff; */
   padding: 20px;
+  /* display: flex; */
+  /* width: 100%; */
 }
 
 .float-child {

@@ -1,23 +1,51 @@
-// import { FaTimes } from 'react-icons/fa'
-import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
+import { useState } from "react"
+import { FiCheck, FiChevronLeft, FiChevronRight, FiX, FiMoreHorizontal } from "react-icons/fi";
 
-const Task = ({ task, onDelete, onToggle, onBackwards, onForward, darkMode}) => {
+const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMode}) => {
+  const [showEditField, setShowEditField] = useState(false)
+  const [newName, setNewName] = useState("")
+  const [newTime, setNewTime] = useState("")
+
+  const taskEdit = () => {
+    setShowEditField(true)
+  }
+
+  const taskEditSubmit = ( id ) => {
+    setShowEditField(false)
+    if (newName !== "") {
+      onEdit(id, newName)
+    }
+    setNewName("")
+  }
+
   return (
     <div 
       className={`task ${task.reminder ? 'reminder' : ''} ${darkMode ? "dark" : "light"}` } 
       onDoubleClick={() => onToggle(task.id)}
     >
-      {/* <div className={darkMode ? "dark-mode-tasks" : "light-mode-tasks"}> */}
-        <h3>
-          {task.name}
-          <div style={{minWidth:"60px"}}>
-            <FiChevronLeft onClick={() => onBackwards(task.id)}/>
-            <FiChevronRight onClick={() => onForward(task.id)}/>
-            <FiX onClick={() => onDelete(task.id)}/>
-          </div>
-        </h3>
-        <h5> {task.day} </h5>
-      {/* </div> */}
+      <h3>
+        {!showEditField && <p>{task.name}</p>}
+        {showEditField && <input 
+          type='text' 
+          placeholder={task.name}
+          value = {newName} 
+          onChange={(e) => setNewName(e.target.value)}
+          />}
+        <div style={{minWidth:"80px"}}>
+          {!showEditField && <FiMoreHorizontal onClick={() => taskEdit(task.id)}/>}
+          {showEditField && <FiCheck onClick={() => taskEditSubmit(task.id)}/>}
+          <FiChevronLeft onClick={() => onBackwards(task.id)}/>
+          <FiChevronRight onClick={() => onForward(task.id)}/>
+          <FiX onClick={() => onDelete(task.id)}/>
+        </div>
+      </h3>
+      {!showEditField && <h5>{task.day}</h5>}
+      {showEditField && <input 
+        type='text' 
+        placeholder={task.day}
+        value = {newTime} 
+        onChange={(e) => setNewTime(e.target.value)}
+      />}
     </div>
   )
 }

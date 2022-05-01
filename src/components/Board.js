@@ -1,7 +1,7 @@
 import React from 'react'
 import Task from './Task'
 
-const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, name }) => {
+const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, name }) => {
   
   return (
     <div className="float-child">
@@ -16,6 +16,7 @@ const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, na
               onForward={onForward} 
               onDelete={onDelete} 
               onToggle={onToggle}
+              onEdit={onEdit}
               darkMode={darkMode}>
             </Task>
           ))

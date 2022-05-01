@@ -7,7 +7,6 @@ const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
 
   const [tasks, setTasks] = useState(() => {
-    // A. Called on initial state on page (re)load
     const stringTasks = localStorage.getItem("tasks")
     const tasksFromLocal = JSON.parse(stringTasks)
     if (tasksFromLocal == null) {
@@ -34,7 +33,6 @@ const App = () => {
   }, [])
 
   const updateTasks = () => {
-    // B. called to update state
     const stringTasks = localStorage.getItem("tasks")
     const tasksFromLocal = JSON.parse(stringTasks)
     setTasks(tasksFromLocal)
@@ -59,21 +57,30 @@ const App = () => {
   }  
   
   const addTask = newTask => {
-    // C. called to add task to local
     const newTaskInArray = (tasks == null) ? [newTask] : [...tasks, newTask]
     localStorage.setItem("tasks", JSON.stringify(newTaskInArray))
     updateTasks()
   }
 
+  const editTask = (id, newName) => {
+    const updatedTasks = tasks.map((item) => {
+      if (item.id === id) {
+        item.name = newName
+        item.day = "Edited Time"
+      }
+      return item
+    })
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
+  }
+
   const deleteTask = id => {
-    // D. called to delete task from local
     const updatedTasks = tasks.filter(item => item.id !== id)
     localStorage.setItem("tasks", JSON.stringify(updatedTasks))
     updateTasks()
   }
 
   const toggleReminder = id => {
-    // E. changes reminder for item with 'id'
     const updatedTasks = tasks.map(item => {
       if (item.id === id) {
         (item.reminder = !item.reminder)
@@ -127,6 +134,7 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
+        onEdit={editTask}
         darkMode={darkMode}
         name="To-do:"
       /> 
@@ -136,6 +144,7 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
+        onEdit={editTask}
         darkMode={darkMode}
         name="Doing:"
       /> 
@@ -145,6 +154,7 @@ const App = () => {
         onToggle={toggleReminder} 
         onBackwards={moveBackwards} 
         onForward={moveForward} 
+        onEdit={editTask}
         darkMode={darkMode}
         name="Done:"
       />
