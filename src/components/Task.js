@@ -39,13 +39,7 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
           <FiX onClick={() => onDelete(task.id)}/>
         </div>
       </h3>
-      {!showEditField && <h5>{task.day}</h5>}
-      {showEditField && <input 
-        type='text' 
-        placeholder={task.day}
-        value = {newTime} 
-        onChange={(e) => setNewTime(e.target.value)}
-      />}
+      <h5>{task.day}</h5>
     </div>
   )
 }

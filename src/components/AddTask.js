@@ -42,7 +42,7 @@ const AddTask = ({ onAdd, tasks, darkMode }) => {
         />
       </div>
       <div className={`form-control ${darkMode ? "dark" : "light"}`}>
-        <label>Day and Time:</label>
+        <label>Time:</label>
         <input 
           type='text' 
           placeholder=' Enter Time' 

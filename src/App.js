@@ -66,7 +66,6 @@ const App = () => {
     const updatedTasks = tasks.map((item) => {
       if (item.id === id) {
         item.name = newName
-        item.day = "Edited Time"
       }
       return item
     })
