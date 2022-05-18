@@ -20,6 +20,7 @@
   --button-toggle-bg: rgb(69, 69, 69);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
+  --addtask-input-bg: #f4f4f4;
 }
 
 html[data-theme='dark'] {
@@ -38,6 +39,7 @@ html[data-theme='dark'] {
   --button-toggle-bg: rgb(73, 134, 175); 
   --submit-input-bg: #4986af;
   --submit-input-color: black;
+  --addtask-input-bg: rgb(58, 64, 82);
 }
 
 /* html body section */
@@ -204,13 +206,9 @@ h1{
   margin: 12px 0px;
 }
 
-.form-control.light label {
+.form-control label {
   display: block;
-}
-
-.form-control.dark label {
-  display: block;
-  color: white;
+  color: var(--text);
 }
 
 .form-control input {
@@ -220,6 +218,9 @@ h1{
   padding: 3px;
   font-size: 17px;
   box-sizing: border-box;
+  background-color: var(--addtask-input-bg);
+  border: 1px #f4f4f4;
+  border-radius: 6px;
 }
 
 .form-control-check {
@@ -242,7 +243,7 @@ h1{
   width: 15px;
 }
 
-input {
+/* input {
   background: #eeeeee;
   border: 1px solid #f4f4f4;
   border-radius: 6px;
@@ -252,7 +253,7 @@ input.dark {
   background: rgb(58, 64, 82);
   border: 1px #f4f4f4;
   border-radius: 6px;
-}
+} */
 
 .submit-input {
   display: block;

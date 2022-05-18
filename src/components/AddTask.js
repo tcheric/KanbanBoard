@@ -51,7 +51,6 @@ const AddTask = ({ onAdd, tasks, darkMode }) => {
           className={`input ${darkMode ? "dark" : "light"}`}
         />
       </div>
-      {/* <div className='form-control form-control-check'> */}
       <div className={`form-control ${darkMode ? "dark" : "light"} form-control-check`}>
         <label>Reminder:</label>
         <input 
