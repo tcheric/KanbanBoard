@@ -5,7 +5,7 @@ const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, on
   
   return (
     <div className="float-child">
-      <div className={`boards ${darkMode ? "dark" : "light"}`}>
+      <div className="boards">
         <h2><u>{name}</u></h2>
         {tasks.length > 0 ? (
           tasks.map((task) => (

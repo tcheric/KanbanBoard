@@ -1,26 +1,26 @@
 import PropTypes from 'prop-types'
 import Button from './Button'
 
-const Header = ({ title, toggleAddTask, showAdd, toggleDarkMode, darkMode }) => {
+const Header = ({ title, toggleAddTask, showAdd, toggleTheme, darkMode }) => {
   
   return (
     <header className='header'>
-      <h1 style={darkMode ? {color:'whitesmoke'} : {color:'black'}}><u> { title } </u></h1>
+      <h1><u> { title } </u></h1>
       <div className="buttons">
         <Button 
-          color={showAdd ? 'darkGray' : 'steelBlue'} 
           text={showAdd ? 'HIDE' : 'ADD'} 
+          type="toggle"
           onClick = {() => {
             console.log('Click')
             toggleAddTask()
           }}
         />
         <Button 
-          color={darkMode ? 'steelBlue' : 'dimgrey'} 
           text={darkMode ? 'Light Mode' : 'Dark Mode'} 
+          type="toggle"
           onClick = {() => {
             console.log('Click')
-            toggleDarkMode()
+            toggleTheme()
           }}
         />
       </div>

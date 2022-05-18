@@ -16,16 +16,23 @@ const App = () => {
     }
   })
 
-  const [darkMode, setDarkMode] = useState(() => {
-    // darkMode is a string, not a bool
-    const stringDarkMode = localStorage.getItem("darkMode")
-    const DarkModeFromLocal = JSON.parse(stringDarkMode)
-    return DarkModeFromLocal
+  const [theme, setTheme] = useState(() => {
+    // GET THEME FROM LOCALSTORAGE USER OBJECT
+    const themeFromLS = localStorage.getItem("theme")
+    if (themeFromLS === null || themeFromLS === "" || themeFromLS === "light") {
+      document.body.classList.toggle("light-mode-body")
+      document.documentElement.setAttribute("data-theme", "light") //set theme to light
+      localStorage.setItem("theme", "light") 
+      return "light"
+    } else if (themeFromLS === "dark") {
+      document.body.classList.toggle("dark-mode-body")
+      document.documentElement.setAttribute("data-theme", "dark") //set theme to dark
+      return "dark"
+    }
   })
 
   useEffect(() => {
-    if (localStorage.getItem("darkMode") === "true") {
-      console.log(localStorage.getItem("darkMode"))
+    if (localStorage.getItem("theme") === "dark") {
       document.body.classList.toggle("dark-mode-body");
     } else {
       document.body.classList.toggle("light-mode-body");
@@ -38,19 +45,35 @@ const App = () => {
     setTasks(tasksFromLocal)
   }
 
-  const toggleDarkMode = () => {
-    localStorage.setItem("darkMode", JSON.stringify(!darkMode))
-    setDarkMode(!darkMode)
-    if (!darkMode) {
-      document.body.classList.toggle("light-mode-body");
-      document.body.classList.toggle("dark-mode-body");
-      console.log('set to dark mode using classlist')
-    } else {
-      document.body.classList.toggle("light-mode-body");
-      document.body.classList.toggle("dark-mode-body");
-      console.log('set to light mode using classlist')
+  const toggleTheme = () => {
+    // GET THEME FROM LOCALSTORAGE USER OBJECT
+    const darkModeFromLS = localStorage.getItem("theme")
+
+    if (darkModeFromLS === "light" || darkModeFromLS === "") {
+      document.documentElement.setAttribute("data-theme", "dark") // set theme to dark
+      setTheme("dark") // usestate
+      localStorage.setItem("theme", "dark") // SET THEME TO LOCALSTORAGE USER OBJECT
+    } else if (darkModeFromLS === "dark") {
+      document.documentElement.setAttribute("data-theme", "light")
+      setTheme("light") 
+      localStorage.setItem("theme", "light") 
     }
-  }  
+    document.body.classList.toggle("light-mode-body")
+    document.body.classList.toggle("dark-mode-body");
+  
+    // localStorage.setItem("darkMode", JSON.stringify(!darkMode))
+    // setDarkMode(!darkMode)
+    // if (!darkMode) {
+    //   document.body.classList.toggle("light-mode-body");
+    //   document.body.classList.toggle("dark-mode-body");
+    //   console.log('set to dark mode using classlist')
+    // } else {
+    //   document.body.classList.toggle("light-mode-body");
+    //   document.body.classList.toggle("dark-mode-body");
+    //   console.log('set to light mode using classlist')
+    // }
+  }
+    
 
   const toggleAddTask = () => {
     setShowAddTask(!showAddTask)
@@ -123,10 +146,10 @@ const App = () => {
       <Header 
         toggleAddTask={toggleAddTask} 
         showAdd={showAddTask} 
-        toggleDarkMode={toggleDarkMode}
-        darkMode={darkMode}
+        toggleTheme={toggleTheme}
+        darkMode={theme}
       />
-      {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={darkMode}/>}
+      {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
       <Board 
         tasks={sortTasks(0)} 
         onDelete={deleteTask} 
@@ -134,7 +157,7 @@ const App = () => {
         onBackwards={moveBackwards} 
         onForward={moveForward} 
         onEdit={editTask}
-        darkMode={darkMode}
+        darkMode={theme}
         name="To-do:"
       /> 
       <Board 
@@ -144,7 +167,7 @@ const App = () => {
         onBackwards={moveBackwards} 
         onForward={moveForward} 
         onEdit={editTask}
-        darkMode={darkMode}
+        darkMode={theme}
         name="Doing:"
       /> 
       <Board 
@@ -154,7 +177,7 @@ const App = () => {
         onBackwards={moveBackwards} 
         onForward={moveForward} 
         onEdit={editTask}
-        darkMode={darkMode}
+        darkMode={theme}
         name="Done:"
       />
     </div>

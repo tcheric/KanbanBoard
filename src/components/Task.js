@@ -4,7 +4,6 @@ import { FiCheck, FiChevronLeft, FiChevronRight, FiX, FiMoreHorizontal } from "r
 const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMode}) => {
   const [showEditField, setShowEditField] = useState(false)
   const [newName, setNewName] = useState("")
-  const [newTime, setNewTime] = useState("")
 
   const taskEdit = () => {
     setShowEditField(true)
@@ -20,7 +19,7 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
 
   return (
     <div 
-      className={`task ${task.reminder ? 'reminder' : ''} ${darkMode ? "dark" : "light"}` } 
+      className={`task ${task.reminder ? 'reminder' : ''}`} 
       onDoubleClick={() => onToggle(task.id)}
     >
       <h3>

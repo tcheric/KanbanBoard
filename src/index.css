@@ -3,6 +3,45 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
+
+:root {
+  --background: white;
+  --text: black;
+  --title-color: black;
+  --board-border: 1px solid rgb(155, 158, 163);
+  --board-bg-color: rgba(250, 250, 250, 0.97);
+  --board-text: black;
+  --task-bg-color: #f1f1f1;
+  --task-border: none;
+  --task-time-text: black;
+  --task-edit-bg: rgb(249, 249, 249);
+  --task-edit-border: 1px dashed rgb(225, 225, 225);
+  --task-reminder: 5px solid skyblue;
+  --button-toggle-bg: rgb(69, 69, 69);
+  --submit-input-bg: rgb(31, 31, 31);
+  --submit-input-color: white;
+}
+
+html[data-theme='dark'] {
+  --background: rgb(40, 40, 40);
+  --text: white;
+  --title-color: whitesmoke;
+  --board-border: 1px solid rgb(55, 61, 75);
+  --board-bg-color: rgba(21, 24, 32, 0.97);
+  --board-text: rgb(230, 230, 230);
+  --task-bg-color: #232323;
+  --task-border: 1px solid #181818;
+  --task-time-text: antiquewhite;
+  --task-edit-bg: rgb(20, 20, 20);
+  --task-edit-border: 1px dashed rgb(50, 50, 50);
+  --task-reminder: 5px solid rgb(58, 123, 167);
+  --button-toggle-bg: rgb(73, 134, 175); 
+  --submit-input-bg: #4986af;
+  --submit-input-color: black;
+}
+
+/* html body section */
+
 body {
   font-family: 'Open Sans';
   height: 100%;
@@ -23,32 +62,43 @@ body {
   background-image: url("./pointing_meme_flat2.png");
 }
 
-.boards.light {
-  max-width: 500px;
-  margin: 5px auto;
-  overflow: auto;
-  min-height: 300px;
-  border: 1px solid rgb(155, 158, 163);
-  padding: 15px;
-  border-radius: 5px;
-  background-color: rgba(250, 250, 250, 0.97);
-} 
+/* Boards section */
 
-.boards.dark {
+.boards {
   max-width: 500px;
   margin: 5px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid rgb(55, 61, 75);
+  border: var(--board-border);
   padding: 15px;
   border-radius: 5px;
-  background-color: rgba(21, 24, 32, 0.97);
-  color: rgb(230, 230, 230);
+  background-color: var(--board-bg-color);
+  color: var(--board-text);
 }
 
 span {
   font-family: 'Montserrat';
 }
+
+.float-container {
+  padding: 20px;
+}
+
+.float-child {
+  width: 29%;
+  float: left;
+  padding: 2%;
+}
+
+.float-child h2 {
+  text-align: center;
+  padding-bottom: 7px;
+  /* color: rgb(69, 105, 212); */
+  font-weight: 400;
+  margin-top: 10px;
+}
+
+/* Header section */
 
 .header {
   display: flex;
@@ -60,63 +110,45 @@ span {
   margin: 0 auto;
 }
 
-.header h1{
+h1{
   padding-right: 10px;
+  color: var(--title-color);
 }
 
 .header .buttons{
   display: inline-flex;
 }
 
-.btn {
-  display: inline-block;
-  background: #000;
+/* Button section */
+
+.button {
+  cursor: pointer;
+}
+
+.button.toggle{
+  background: var(--button-toggle-bg);
   color: #fff;
-  border: none;
-  padding: 10px 20px 30px 20px;
+  max-height: 35px;
   padding: 10px 20px;
   margin: 5px;
+  border: none;
   border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
   font-size: 13px;
   font-family: 'Ubuntu';
-  max-height: 35px;
   white-space: nowrap;
   display: flex;
   align-items: center;
 }
 
-.btn.dark {
-  display: inline-block;
-  background: rgb(73, 134, 175); 
-  /* background: rgb(69, 105, 212); royalblue*/ 
-  color: black;
-  border: none;
-  padding: 10px 20px 30px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.btn:active {
+.button.toggle:active {
   transform: scale(0.98);
 }
 
-.btn-block {
-  display: block;
-  width: 98%;
-}
+/* Task section */
 
 .task {
-  background: #f1f1f1;
+  background: var(--task-bg-color);
+  border: var(--task-border);
   margin: 5px;
   padding: 10px 20px;
   padding-right: 15px;
@@ -125,22 +157,8 @@ span {
   overflow: hidden;
 }
 
-.task.dark {
-  background-color: #232323;
-  border: 1px solid #181818;
-}
-
-.task.reminder.light {
-  background: #f1f1f1;
-  border-left: 5px solid skyblue;
-}
-
-.task.reminder.dark {
-  border-left: 5px solid rgb(58, 123, 167);
-  background-color: #232323;
-  border-top: 1px solid #181818;
-  border-right: 1px solid #181818;
-  border-bottom: 1px solid #181818;
+.task.reminder {
+  border-left: var(--task-reminder)
 }
 
 .task h3 {
@@ -154,17 +172,15 @@ span {
 }
 
 .task p {
-  /* color: antiquewhite; */
   margin: 0;
 }
 
 .task input {
   color: rgb(0, 140, 200);
-  border: none;
+  border: var(--task-edit-border);
   outline: none;
-  background-color: rgb(20, 20, 20);
-  /* background-color: #232323; */
-  width: 50%;
+  background-color: var(--task-edit-bg);
+  width: 65%;
   border-radius: 3px;
   font-size: large;
 }
@@ -173,8 +189,10 @@ span {
   margin: 0;
   padding: 0;
   font-weight: normal;
-  color: antiquewhite;
+  color: var(--task-time-text);
 }
+
+/* Add task section */
 
 .add-form {
   padding: 0px;
@@ -224,29 +242,6 @@ span {
   width: 15px;
 }
 
-.float-container {
-  padding: 20px;
-}
-
-.float-child {
-  width: 29%;
-  float: left;
-  padding: 2%;
-}
-
-.float-child h2 {
-  text-align: center;
-  padding-bottom: 7px;
-  /* color: rgb(69, 105, 212); */
-  font-weight: 400;
-  margin-top: 10px;
-}
-
-footer {
-  margin-top: 30px;
-  text-align: center;
-}
-
 input {
   background: #eeeeee;
   border: 1px solid #f4f4f4;
@@ -259,3 +254,15 @@ input.dark {
   border-radius: 6px;
 }
 
+.submit-input {
+  display: block;
+  width: 100%;
+  color: var(--submit-input-color);
+  background-color: var(--submit-input-bg);
+  padding: 0;
+  margin-top: 10px;  
+  border: none;
+  height: 30px;
+  font-family: 'Ubuntu';
+  font-size: 14px;
+}

@@ -62,7 +62,7 @@ const AddTask = ({ onAdd, tasks, darkMode }) => {
         />
       </div>
       <input 
-        type='submit' value='Save Task' className={`btn ${darkMode ? "dark" : "light"} btn-block`}
+        type='submit' value='Save Task' className={`submit-input`}
       />
     </form>
   )
