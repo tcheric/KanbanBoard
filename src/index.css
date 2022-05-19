@@ -11,16 +11,17 @@
   --board-border: 1px solid rgb(155, 158, 163);
   --board-bg-color: rgba(250, 250, 250, 0.97);
   --board-text: black;
-  --task-bg-color: #f1f1f1;
+  --task-bg-color: #efefef;
   --task-border: none;
   --task-time-text: black;
   --task-edit-bg: rgb(249, 249, 249);
   --task-edit-border: 1px dashed rgb(225, 225, 225);
   --task-reminder: 5px solid skyblue;
-  --button-toggle-bg: rgb(69, 69, 69);
+  --button-toggle-bg: rgb(86, 86, 86);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
-  --addtask-input-bg: #f4f4f4;
+  --addtask-input-bg: hsl(0, 0%, 96%);
+  --addtask-input-text: rgb(163, 163, 163);
 }
 
 html[data-theme='dark'] {
@@ -40,6 +41,7 @@ html[data-theme='dark'] {
   --submit-input-bg: #4986af;
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
+  --addtask-input-text: rgb(130, 130, 130);
 }
 
 /* html body section */
@@ -127,10 +129,11 @@ h1{
   cursor: pointer;
 }
 
-.button.toggle{
+.button.toggle {
   background: var(--button-toggle-bg);
   color: #fff;
   max-height: 35px;
+  width: 100px;
   padding: 10px 20px;
   margin: 5px;
   border: none;
@@ -139,11 +142,20 @@ h1{
   font-family: 'Ubuntu';
   white-space: nowrap;
   display: flex;
+  justify-content: center;
   align-items: center;
+}
+
+.button.toggle.expanded {
+  background: grey;
 }
 
 .button.toggle:active {
   transform: scale(0.98);
+}
+
+#add.button.toggle {
+  width: 70px;
 }
 
 /* Task section */
@@ -223,6 +235,10 @@ h1{
   border-radius: 6px;
 }
 
+.form-control input::placeholder {
+  color: var(--addtask-input-text);
+}
+
 .form-control-check {
   display: flex;
   align-items: center;
@@ -231,29 +247,15 @@ h1{
 }
 
 .form-control-check label {
-  /* flex: 1; */
   float: left;
   margin-right: 100px
 }
 
 .form-control-check input {
-  /* flex: 0.5; */
   height: 15px;
   float: right;
   width: 15px;
 }
-
-/* input {
-  background: #eeeeee;
-  border: 1px solid #f4f4f4;
-  border-radius: 6px;
-}
-
-input.dark {
-  background: rgb(58, 64, 82);
-  border: 1px #f4f4f4;
-  border-radius: 6px;
-} */
 
 .submit-input {
   display: block;
@@ -266,4 +268,5 @@ input.dark {
   height: 30px;
   font-family: 'Ubuntu';
   font-size: 14px;
+  border-radius: 5px;
 }

@@ -147,7 +147,7 @@ const App = () => {
         toggleAddTask={toggleAddTask} 
         showAdd={showAddTask} 
         toggleTheme={toggleTheme}
-        darkMode={theme}
+        theme={theme}
       />
       {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
       <Board 
