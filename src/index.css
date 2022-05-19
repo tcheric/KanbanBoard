@@ -29,16 +29,20 @@ html[data-theme='dark'] {
   --text: white;
   --title-color: whitesmoke;
   --board-border: 1px solid rgb(55, 61, 75);
-  --board-bg-color: rgba(21, 24, 32, 0.97);
+  /* --board-bg-color: rgba(21, 24, 32, 0.97); */
+  --board-bg-color: rgba(29, 30, 34, 0.97);
   --board-text: rgb(230, 230, 230);
   --task-bg-color: #232323;
   --task-border: 1px solid #181818;
   --task-time-text: antiquewhite;
   --task-edit-bg: rgb(20, 20, 20);
   --task-edit-border: 1px dashed rgb(50, 50, 50);
-  --task-reminder: 5px solid rgb(58, 123, 167);
-  --button-toggle-bg: rgb(73, 134, 175); 
-  --submit-input-bg: #4986af;
+  /* --task-reminder: 5px solid rgb(58, 123, 167); */
+  --task-reminder: 5px solid rgb(180, 173, 137); 
+  /* --button-toggle-bg: rgb(73, 134, 175);  */
+  --button-toggle-bg: rgb(197, 190, 153); 
+  /* --submit-input-bg: #4986af; */
+  --submit-input-bg: rgb(180, 173, 137); 
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
   --addtask-input-text: rgb(130, 130, 130);
@@ -131,7 +135,7 @@ h1{
 
 .button.toggle {
   background: var(--button-toggle-bg);
-  color: #fff;
+  color: var(--submit-input-color);
   max-height: 35px;
   width: 100px;
   padding: 10px 20px;
