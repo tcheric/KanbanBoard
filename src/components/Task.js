@@ -22,23 +22,25 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
       className={`task ${task.reminder ? 'reminder' : ''}`} 
       onDoubleClick={() => onToggle(task.id)}
     >
-      <h3>
-        {!showEditField && <p>{task.name}</p>}
-        {showEditField && <input 
-          type='text' 
-          placeholder={task.name}
-          value = {newName} 
-          onChange={(e) => setNewName(e.target.value)}
-          />}
-        <div style={{minWidth:"80px"}}>
-          {!showEditField && <FiMoreHorizontal onClick={() => taskEdit(task.id)}/>}
-          {showEditField && <FiCheck onClick={() => taskEditSubmit(task.id)}/>}
-          <FiChevronLeft onClick={() => onBackwards(task.id)}/>
-          <FiChevronRight onClick={() => onForward(task.id)}/>
-          <FiX onClick={() => onDelete(task.id)}/>
-        </div>
-      </h3>
-      <h5>{task.day}</h5>
+      <div className="task-left">
+        <h3>
+          {!showEditField && <p>{task.name}</p>}
+          {showEditField && <input 
+            type='text' 
+            placeholder={task.name}
+            value = {newName} 
+            onChange={(e) => setNewName(e.target.value)}
+            />}
+        </h3>
+        <h5>{task.day}</h5>
+      </div>
+      <div className="task-buttons">
+        {!showEditField && <FiMoreHorizontal onClick={() => taskEdit(task.id)}/>}
+        {showEditField && <FiCheck onClick={() => taskEditSubmit(task.id)}/>}
+        <FiChevronLeft onClick={() => onBackwards(task.id)}/>
+        <FiChevronRight onClick={() => onForward(task.id)}/>
+        <FiX onClick={() => onDelete(task.id)}/>
+      </div>
     </div>
   )
 }

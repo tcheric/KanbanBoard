@@ -7,9 +7,9 @@
 :root {
   --background: white;
   --text: black;
-  --title-color: black;
+  --title-color: rgb(30, 30, 30);
   --board-border: 1px solid rgb(155, 158, 163);
-  --board-bg-color: rgba(250, 250, 250, 0.97);
+  --board-bg-color: rgba(252, 252, 252, 0.97);
   --board-text: black;
   --task-bg-color: #efefef;
   --task-border: none;
@@ -17,19 +17,18 @@
   --task-edit-bg: rgb(249, 249, 249);
   --task-edit-border: 1px dashed rgb(225, 225, 225);
   --task-reminder: 5px solid skyblue;
-  --button-toggle-bg: rgb(86, 86, 86);
+  --button-toggle-bg: rgb(126, 126, 126);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: hsl(0, 0%, 96%);
   --addtask-input-text: rgb(163, 163, 163);
 }
 
-html[data-theme='dark'] {
+html[data-theme='blacksand'] {
   --background: rgb(40, 40, 40);
   --text: white;
   --title-color: whitesmoke;
   --board-border: 1px solid rgb(55, 61, 75);
-  /* --board-bg-color: rgba(21, 24, 32, 0.97); */
   --board-bg-color: rgba(29, 30, 34, 0.97);
   --board-text: rgb(230, 230, 230);
   --task-bg-color: #232323;
@@ -37,18 +36,39 @@ html[data-theme='dark'] {
   --task-time-text: antiquewhite;
   --task-edit-bg: rgb(20, 20, 20);
   --task-edit-border: 1px dashed rgb(50, 50, 50);
-  /* --task-reminder: 5px solid rgb(58, 123, 167); */
   --task-reminder: 5px solid rgb(180, 173, 137); 
-  /* --button-toggle-bg: rgb(73, 134, 175);  */
   --button-toggle-bg: rgb(197, 190, 153); 
-  /* --submit-input-bg: #4986af; */
   --submit-input-bg: rgb(180, 173, 137); 
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
   --addtask-input-text: rgb(130, 130, 130);
 }
 
+html[data-theme='blackblue'] {
+  --background: rgb(40, 40, 40);
+  --text: white;
+  --title-color: whitesmoke;
+  --board-border: 1px solid rgb(55, 61, 75);
+  --board-bg-color: rgba(21, 24, 32, 0.97);
+  --board-text: rgb(230, 230, 230);
+  --task-bg-color: #232323;
+  --task-border: 1px solid #181818;
+  --task-time-text: antiquewhite;
+  --task-edit-bg: rgb(20, 20, 20);
+  --task-edit-border: 1px dashed rgb(50, 50, 50);
+  --task-reminder: 5px solid rgb(58, 123, 167);
+  --button-toggle-bg: rgb(73, 134, 175); 
+  --submit-input-bg: #4986af;
+  --submit-input-color: black;
+  --addtask-input-bg: rgb(58, 64, 82);
+  --addtask-input-text: rgb(130, 130, 130);
+}
+
 /* html body section */
+
+/* html, body, #root, .App {
+  height: 100%;
+} */
 
 body {
   font-family: 'Open Sans';
@@ -112,14 +132,15 @@ span {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 40%;
-  min-width: 360px;
-  max-width: 500px;
+  width: 35%;
+  min-width: 300px;
+  max-width: 380px;
   margin: 0 auto;
 }
 
 h1{
-  padding-right: 10px;
+  padding-right: 0px;
+  min-width: 240px;
   color: var(--title-color);
 }
 
@@ -134,15 +155,15 @@ h1{
 }
 
 .button.toggle {
-  background: var(--button-toggle-bg);
-  color: var(--submit-input-color);
-  max-height: 35px;
-  width: 100px;
-  padding: 10px 20px;
+  background: var(--board-bg-color);
+  color: var(--button-toggle-bg);
+  height: 35px;
+  width: 55px;
+  padding: 4px;
   margin: 5px;
-  border: none;
-  border-radius: 5px;
-  font-size: 13px;
+  border: 1px solid var(--button-toggle-bg);
+  border-radius: 3px;
+  font-size: 20px;
   font-family: 'Ubuntu';
   white-space: nowrap;
   display: flex;
@@ -152,14 +173,50 @@ h1{
 
 .button.toggle.expanded {
   background: grey;
+  color: white;
 }
 
 .button.toggle:active {
   transform: scale(0.98);
 }
 
-#add.button.toggle {
+/* #add.button.toggle {
   width: 70px;
+} */
+
+.button.close {
+  border: none;
+  background: none;
+  color: rgba(100, 100, 100, 0.1);
+}
+
+#modal.button.close {
+  font-size:medium;
+  position: absolute;
+  right: 0;
+  margin: 4px;
+  padding: 0;
+  z-index: 3;
+} 
+
+#modal.button.close:hover {
+  visibility: visible;
+  color: rgba(100, 100, 100, 0.7);
+} 
+
+button.modal {
+  flex: 1;
+  height: 100%;
+  border: 1px solid rgb(237, 237, 237);
+  background-color: rgb(251, 251, 251);
+  font-size: medium;
+  font-family: "montserrat";
+}
+
+button.modal.selected {
+  border-bottom: none;
+  background-color: inherit;
+  border-top: 2px groove red;
 }
 
 /* Task section */
@@ -173,6 +230,9 @@ h1{
   cursor: pointer;
   box-sizing: border-box;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .task.reminder {
@@ -180,13 +240,10 @@ h1{
 }
 
 .task h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-weight: normal;
+  min-width: 75px;
 }
 
 .task p {
@@ -208,6 +265,12 @@ h1{
   padding: 0;
   font-weight: normal;
   color: var(--task-time-text);
+}
+
+.task-buttons {
+  min-width: 80px;
+  display: flex;
+  justify-content: end;
 }
 
 /* Add task section */
@@ -273,4 +336,63 @@ h1{
   font-family: 'Ubuntu';
   font-size: 14px;
   border-radius: 5px;
+}
+
+/* Modal section */
+
+.modal-bg {
+  width: 100%;
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;  
+  left: 0;
+}
+
+.popup {
+  top: 18%;  
+  /* width: 50%; */
+  max-width: 90%;
+  min-height: 300px;
+  height: 60%;
+  aspect-ratio: 16 / 10;
+  background: white;
+  position: fixed;
+  z-index: 100;
+  border-radius: 2px;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 5px 2px rgba(80, 75, 75, 0.5);
+}
+
+.modal-buttons {
+  width: 100%;  
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 100%;  
+  height: 70%;
+}
+
+.modal-header {
+  height: 15%;
+  position: relative;
+}
+
+.modal-header span{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: larger;
+}
+
+.modal-content-container {
+  padding: 2%;
 }

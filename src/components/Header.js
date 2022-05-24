@@ -1,15 +1,23 @@
 import PropTypes from 'prop-types'
 import Button from './Button'
+import { FaPlus, FaCog, FaMinus } from "react-icons/fa";
+import SettingsModal from "./SettingsModal"
+import { useState } from "react"
 
 const Header = ({ title, toggleAddTask, showAdd, toggleTheme, theme }) => {
+  const [showModal, setShowModal] = useState(false)
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
+  }
   
   return (
     <header className='header'>
-      <h1><u> { title } </u></h1>
+      <h1> { title } </h1>
       <div className="buttons">
         <Button 
           id="add"
-          text={showAdd ? 'HIDE' : 'ADD'} 
+          text={showAdd ? <FaMinus/> : <FaPlus/>}
           type={`toggle ${showAdd ? "expanded" : ""}`}
           onClick = {() => {
             console.log('Click')
@@ -17,14 +25,15 @@ const Header = ({ title, toggleAddTask, showAdd, toggleTheme, theme }) => {
           }}
         />
         <Button 
-          text={theme === "dark" ? 'Light Mode' : 'Dark Mode'} 
+          text={<FaCog/>}
           type="toggle"
           onClick = {() => {
             console.log('Click')
-            toggleTheme()
+            toggleModal()
           }}
         />
       </div>
+      <SettingsModal open={showModal} onClose={toggleModal}/>
     </header>
   )
 }

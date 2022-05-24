@@ -24,15 +24,15 @@ const App = () => {
       document.documentElement.setAttribute("data-theme", "light") //set theme to light
       localStorage.setItem("theme", "light") 
       return "light"
-    } else if (themeFromLS === "dark") {
+    } else if (themeFromLS === "blacksand") {
       document.body.classList.toggle("dark-mode-body")
-      document.documentElement.setAttribute("data-theme", "dark") //set theme to dark
-      return "dark"
+      document.documentElement.setAttribute("data-theme", "blacksand") //set theme to dark
+      return "blacksand"
     }
   })
 
   useEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
+    if (localStorage.getItem("theme") === "blacksand") {
       document.body.classList.toggle("dark-mode-body");
     } else {
       document.body.classList.toggle("light-mode-body");
@@ -51,27 +51,19 @@ const App = () => {
 
     if (darkModeFromLS === "light" || darkModeFromLS === "") {
       document.documentElement.setAttribute("data-theme", "dark") // set theme to dark
-      setTheme("dark") // usestate
-      localStorage.setItem("theme", "dark") // SET THEME TO LOCALSTORAGE USER OBJECT
-    } else if (darkModeFromLS === "dark") {
+      setTheme("blacksand") // usestate
+      localStorage.setItem("theme", "blacksand") // SET THEME TO LOCALSTORAGE USER OBJECT
+    } else if (darkModeFromLS === "blacksand") {
+      document.documentElement.setAttribute("data-theme", "light")
+      setTheme("light") 
+      localStorage.setItem("theme", "light") 
+    } else if (darkModeFromLS === "blackblue") {
       document.documentElement.setAttribute("data-theme", "light")
       setTheme("light") 
       localStorage.setItem("theme", "light") 
     }
     document.body.classList.toggle("light-mode-body")
     document.body.classList.toggle("dark-mode-body");
-  
-    // localStorage.setItem("darkMode", JSON.stringify(!darkMode))
-    // setDarkMode(!darkMode)
-    // if (!darkMode) {
-    //   document.body.classList.toggle("light-mode-body");
-    //   document.body.classList.toggle("dark-mode-body");
-    //   console.log('set to dark mode using classlist')
-    // } else {
-    //   document.body.classList.toggle("light-mode-body");
-    //   document.body.classList.toggle("dark-mode-body");
-    //   console.log('set to light mode using classlist')
-    // }
   }
     
 
