@@ -187,11 +187,11 @@ h1{
 .button.close {
   border: none;
   background: none;
-  color: rgba(100, 100, 100, 0.1);
+  color: rgba(100, 100, 100, 0.3);
 }
 
 #modal.button.close {
-  font-size:medium;
+  font-size: 18px;
   position: absolute;
   right: 0;
   margin: 4px;
@@ -209,7 +209,7 @@ button.modal {
   height: 100%;
   border: 1px solid rgb(237, 237, 237);
   background-color: rgb(251, 251, 251);
-  font-size: medium;
+  font-size: 18px;
   font-family: "montserrat";
 }
 
@@ -356,7 +356,7 @@ button.modal.selected {
   /* width: 50%; */
   max-width: 90%;
   min-height: 300px;
-  height: 60%;
+  height: 65%;
   aspect-ratio: 16 / 10;
   background: white;
   position: fixed;
@@ -365,6 +365,7 @@ button.modal.selected {
   -moz-box-shadow: 0 0 3px #ccc;
   -webkit-box-shadow: 0 0 3px #ccc;
   box-shadow: 0 0 5px 2px rgba(80, 75, 75, 0.5);
+  overflow: auto;
 }
 
 .modal-buttons {
@@ -373,11 +374,6 @@ button.modal.selected {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.modal-content {
-  width: 100%;  
-  height: 70%;
 }
 
 .modal-header {
@@ -390,9 +386,46 @@ button.modal.selected {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: larger;
+  font-size: 22px;
 }
 
+/* Modal Content section */
+
 .modal-content-container {
-  padding: 2%;
+  padding-inline: 16px;
+  padding-block: 8px;
+}
+
+.modal-content-container p{
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.modal-content-container ul{
+  font-size: 15px;
+  margin: 0;
+}
+
+ul#top{
+  margin-bottom: 8px;
+}
+
+.theme-buttons {
+  height: 25px;
+  padding-left: 10px;
+  background-color: grey;  
+}
+
+.modal-content-container a{
+  display: inline-block;
+  margin-block: 10px;
+  color: rgb(191, 31, 31);
+}
+
+p#opening {
+  font-style: italic;
+  margin-bottom: 15px;
+  text-align: center;
 }

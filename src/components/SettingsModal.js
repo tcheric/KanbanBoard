@@ -7,7 +7,6 @@ import ModalContent from "./ModalContent"
 const SettingsModal = ({ open, onClose }) => {
   const [currContent, setCurrContent] = useState("Themes")
 
-
   if (!open) return null
 
   return (
