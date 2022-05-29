@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { useState } from "react"
 import ModalContent from "./ModalContent"
 
-const SettingsModal = ({ open, onClose }) => {
+const SettingsModal = ({ open, onClose, changeTheme }) => {
   const [currContent, setCurrContent] = useState("Themes")
 
   if (!open) return null
@@ -39,7 +39,7 @@ const SettingsModal = ({ open, onClose }) => {
               onClick={() => setCurrContent("About")}
             />
           </div>
-          <ModalContent content={currContent}/>
+          <ModalContent content={currContent} changeTheme={changeTheme}/>
         </div>
       </div>
     </>

@@ -1,14 +1,68 @@
 import React from 'react'
+import { ReactComponent as BlueWhite } from '../bluewhite.svg'
+import { ReactComponent as RedWhite } from '../redwhite.svg'
+import { ReactComponent as BlackBlue } from '../blackblue.svg'
+import { ReactComponent as BlackSand } from '../blacksand.svg'
+import { useState } from "react"
 
-const ModalContent = ({ content }) => {
+const ModalContent = ({ content, changeTheme }) => {
+  const[appliedTheme, setAppliedTheme] = useState(() => {
+    return localStorage.getItem("theme")
+  })
+  const[hoveredTheme, setHoveredTheme] = useState("")
+
+  const getThemeName = () => {
+    if(hoveredTheme === "") {
+      return appliedTheme
+    } else {
+      return hoveredTheme
+    }
+  }
+
+  const testChangeTheme = (param) => {
+    console.log(param) 
+    changeTheme(param)
+    setAppliedTheme(param)
+  }
+
   if (content === "Themes") {
     return (
       <div className="modal-content-container">
-        <p>Change Theme</p>
+        <p>Change Theme:</p>
         <div className="theme-buttons">
-
+          <button 
+            onClick={() => testChangeTheme("Blue / White")} 
+            onMouseEnter={() => setHoveredTheme("Blue / White")} 
+            onMouseLeave={() => setHoveredTheme("")}>
+            <BlueWhite style={{height:'25px', width: '25px'}} />
+          </button>
+          <button 
+            onClick={() => testChangeTheme("Red / White")} 
+            onMouseEnter={() => setHoveredTheme("Red / White")} 
+            onMouseLeave={() => setHoveredTheme("")}>
+            <RedWhite style={{height:'25px', width: '25px'}}/>
+          </button>          
+          <button 
+            onClick={() => testChangeTheme("Black / Blue")} 
+            onMouseEnter={() => setHoveredTheme("Black / Blue")} 
+            onMouseLeave={() => setHoveredTheme("")}>
+            <BlackBlue style={{height:'25px', width: '25px'}} />
+          </button>          
+          <button 
+            onClick={() => testChangeTheme("Black / Sand")} 
+            onMouseEnter={() => setHoveredTheme("Black / Sand")} 
+            onMouseLeave={() => setHoveredTheme("")}>
+            <BlackSand style={{height:'25px', width: '25px'}} />
+          </button>
         </div>
-        <p>Pointing Mode</p>
+        <span>{getThemeName()}</span>
+        <p id="check">Pointing Mode:</p>
+        <input 
+          type='checkbox' 
+          // checked={reminder}
+          // value={reminder} 
+          // onChange={(e) => setReminder(e.currentTarget.checked)}  
+        />
       </div>
     )
   } else if (content === "Help") {
@@ -33,9 +87,11 @@ const ModalContent = ({ content }) => {
   } else if (content === "About") {
     return (
       <div className="modal-content-container" id="about">
-        <p id="opening">A simple and useful kanban board app for tracking tasks.</p>
+        <p id="opening">A simple and practical kanban board application for tracking tasks.</p>
         <p>Kanbanooo is a serverless, single-page application made with React JS and hosted using Netlify.</p>
-        <a href="https://github.com/tcheric/KanbanBoard" target="_blank">Source Code</a>
+        <a href="https://github.com/tcheric/KanbanBoard" target="_blank" rel="noreferrer">
+          Source Code
+        </a>
       </div>
     )
   }

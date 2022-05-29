@@ -24,8 +24,61 @@
   --addtask-input-text: rgb(163, 163, 163);
 }
 
-html[data-theme='blacksand'] {
-  --background: rgb(40, 40, 40);
+html[data-theme="Blue / White"] {
+  --background: white;
+  --text: black;
+  --title-color: rgb(30, 30, 30);
+  --board-border: 1px solid rgb(155, 158, 163);
+  --board-bg-color: rgba(252, 252, 252, 0.97);
+  --board-text: black;
+  --task-bg-color: #efefef;
+  --task-border: none;
+  --task-time-text: black;
+  --task-edit-bg: rgb(249, 249, 249);
+  --task-edit-border: 1px dashed rgb(225, 225, 225);
+  --task-reminder: 5px solid skyblue;
+  --button-toggle-bg: rgb(126, 126, 126);
+  --button-toggle-bg: rgb(101, 145, 193);
+  --submit-input-bg: rgb(31, 31, 31);
+  --submit-input-color: white;
+  --addtask-input-bg: hsl(0, 0%, 96%);
+  --addtask-input-text: rgb(163, 163, 163);
+  --modal-tab-highlight: 2px groove skyblue;
+  --link-accent-color: rgb(39, 131, 167);
+  --checkbox-color: rgb(93, 195, 236);
+  --modal-button-bg: rgb(251, 251, 251);
+  --modal-button-border: 1px solid rgb(237, 237, 237);
+}
+
+
+html[data-theme="Red / White"] {
+  --background: white;
+  --text: black;
+  --title-color: rgb(30, 30, 30);
+  --board-border: 1px solid rgb(155, 158, 163);
+  --board-bg-color: rgba(252, 252, 252, 0.97);
+  --board-text: black;
+  --task-bg-color: #efefef;
+  --task-border: none;
+  --task-time-text: black;
+  --task-edit-bg: rgb(249, 249, 249);
+  --task-edit-border: 1px dashed rgb(225, 225, 225);
+  --task-reminder: 5px solid red;
+  --button-toggle-bg: rgb(126, 126, 126);
+  --button-toggle-bg: rgb(182, 84, 84);
+  --submit-input-bg: rgb(31, 31, 31);
+  --submit-input-color: white;
+  --addtask-input-bg: hsl(0, 0%, 96%);
+  --addtask-input-text: rgb(163, 163, 163);
+  --modal-tab-highlight: 2px groove red;
+  --link-accent-color: rgb(191, 31, 31);
+  --checkbox-color: rgb(205, 57, 57);
+  --modal-button-bg: rgb(251, 251, 251);
+  --modal-button-border: 1px solid rgb(237, 237, 237);
+}
+
+html[data-theme="Black / Sand"] {
+  --background: black;
   --text: white;
   --title-color: whitesmoke;
   --board-border: 1px solid rgb(55, 61, 75);
@@ -42,10 +95,15 @@ html[data-theme='blacksand'] {
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
   --addtask-input-text: rgb(130, 130, 130);
+  --modal-tab-highlight: 2px groove rgb(180, 173, 137);
+  --link-accent-color: rgb(180, 173, 137); 
+  --checkbox-color: rgb(198, 185, 120); 
+  --modal-button-bg: rgb(30, 30, 30);
+  --modal-button-border: 1px solid rgb(40, 40, 40);
 }
 
-html[data-theme='blackblue'] {
-  --background: rgb(40, 40, 40);
+html[data-theme="Black / Blue"] {
+  --background: black;
   --text: white;
   --title-color: whitesmoke;
   --board-border: 1px solid rgb(55, 61, 75);
@@ -62,6 +120,11 @@ html[data-theme='blackblue'] {
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
   --addtask-input-text: rgb(130, 130, 130);
+  --modal-tab-highlight: 2px groove skyblue;
+  --link-accent-color: rgb(39, 131, 167);
+  --checkbox-color: rgb(93, 195, 236);
+  --modal-button-bg: rgb(30, 30, 30);
+  --modal-button-border: 1px solid rgb(40, 40, 40);
 }
 
 /* html body section */
@@ -207,8 +270,9 @@ h1{
 button.modal {
   flex: 1;
   height: 100%;
-  border: 1px solid rgb(237, 237, 237);
-  background-color: rgb(251, 251, 251);
+  border: var(--modal-button-border);
+  background-color: var(--modal-button-bg);
+  color: var(--text);
   font-size: 18px;
   font-family: "montserrat";
 }
@@ -216,7 +280,7 @@ button.modal {
 button.modal.selected {
   border-bottom: none;
   background-color: inherit;
-  border-top: 2px groove red;
+  border-top: var(--modal-tab-highlight);
 }
 
 /* Task section */
@@ -270,7 +334,7 @@ button.modal.selected {
 .task-buttons {
   min-width: 80px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 /* Add task section */
@@ -358,7 +422,8 @@ button.modal.selected {
   min-height: 300px;
   height: 65%;
   aspect-ratio: 16 / 10;
-  background: white;
+  background: var(--background);
+  color: var(--text);
   position: fixed;
   z-index: 100;
   border-radius: 2px;
@@ -403,6 +468,49 @@ button.modal.selected {
   margin-bottom: 0;
 }
 
+.theme-buttons {
+  height: 25px;
+  padding: 8px 8px 5px 6px;
+  display: flex;
+}
+
+.theme-buttons button{
+  background: transparent;
+  padding: 0;
+  margin-right: 6px;
+  height: 25px;
+  width: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+svg {
+  border: #181818;
+  cursor: pointer;
+}
+
+.modal-content-container span{
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-style: italic;
+  padding-left: 8px;
+}
+
+.modal-content-container input {
+  display: inline;
+  height: 16px;
+  width: 16px;
+  padding-top: 2px;
+  margin-left: 6px;
+  position: absolute;
+  accent-color: var(--checkbox-color);
+}
+
+p#check {
+  display: inline;
+}
+
 .modal-content-container ul{
   font-size: 15px;
   margin: 0;
@@ -412,20 +520,15 @@ ul#top{
   margin-bottom: 8px;
 }
 
-.theme-buttons {
-  height: 25px;
-  padding-left: 10px;
-  background-color: grey;  
-}
-
 .modal-content-container a{
   display: inline-block;
   margin-block: 10px;
-  color: rgb(191, 31, 31);
+  color: var(--link-accent-color);
 }
 
 p#opening {
   font-style: italic;
   margin-bottom: 15px;
+  margin-top: 6px;
   text-align: center;
 }
