@@ -19,12 +19,16 @@ const App = () => {
   })
 
   const [theme, setTheme] = useState(() => {
-    // GET THEME FROM LOCALSTORAGE USER OBJECT
     return localStorage.getItem("theme")
   })
 
   useEffect(() => {
-    changeTheme(localStorage.getItem("theme"))
+    const themeFromLS = localStorage.getItem("theme")
+    if (themeFromLS === "" || themeFromLS === null) {
+      changeTheme("Red / White")
+    } else {
+      changeTheme(themeFromLS)
+    }
   }, [])
 
   useEffect(() => {
@@ -51,6 +55,12 @@ const App = () => {
   }
 
   const changeTheme = newTheme => {
+    if (newTheme === "null") {
+      localStorage.setItem("theme", "Red / White")
+      changeTheme("Red / White")
+      return
+    }
+
     document.documentElement.setAttribute("data-theme", newTheme)
     setTheme(newTheme)
     localStorage.setItem("theme", newTheme) 
