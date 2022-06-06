@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
+// import { createRef } from "react/cjs/react.development"
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
+  const [boardHeight, setBoardHeight] = useState(100)
 
   const [tasks, setTasks] = useState(() => {
     const stringTasks = localStorage.getItem("tasks")
@@ -22,8 +24,24 @@ const App = () => {
   })
 
   useEffect(() => {
-    let theme = localStorage.getItem("theme")
-    changeTheme(theme)
+    changeTheme(localStorage.getItem("theme"))
+  }, [])
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(entries => {
+      let currMaxHeight = 0
+      for (let entry of entries) {
+        if (entry.contentRect.height > currMaxHeight) {
+          currMaxHeight = entry.contentRect.height
+        }
+      }
+      setBoardHeight(currMaxHeight)
+      console.log("set!")
+    })
+    const boardElemList = document.querySelectorAll(".board")
+    resizeObserver.observe(boardElemList[0])
+    resizeObserver.observe(boardElemList[1])
+    resizeObserver.observe(boardElemList[2])
   }, [])
 
   const updateTasks = () => {
@@ -112,41 +130,46 @@ const App = () => {
   }
 
   return (
-    <div className={`float-container`}>
+    <>
       <Header 
         toggleAddTask={toggleAddTask} 
         showAdd={showAddTask} 
         changeTheme={changeTheme}
       />
       {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
-      <Board 
-        tasks={sortTasks(0)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        onEdit={editTask}
-        name="To-do:"
-      /> 
-      <Board 
-        tasks={sortTasks(1)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        onEdit={editTask}
-        name="Doing:"
-      /> 
-      <Board 
-        tasks={sortTasks(2)} 
-        onDelete={deleteTask} 
-        onToggle={toggleReminder} 
-        onBackwards={moveBackwards} 
-        onForward={moveForward} 
-        onEdit={editTask}
-        name="Done:"
-      />
-    </div>
+      <div className="board-container">
+        <Board 
+          tasks={sortTasks(0)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          onEdit={editTask}
+          name="To-do:"
+          height={boardHeight}
+        />
+        <Board 
+          tasks={sortTasks(1)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          onEdit={editTask}
+          name="Doing:"
+          height={boardHeight}
+          /> 
+        <Board 
+          tasks={sortTasks(2)} 
+          onDelete={deleteTask} 
+          onToggle={toggleReminder} 
+          onBackwards={moveBackwards} 
+          onForward={moveForward} 
+          onEdit={editTask}
+          name="Done:"
+          height={boardHeight}
+        />
+      </div>
+    </>
   );
 }
 // *If showAddTask is true, then <...> will execute. "short circuit evaluation"

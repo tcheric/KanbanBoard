@@ -81,16 +81,16 @@ html[data-theme="Black / Sand"] {
   --background: black;
   --text: white;
   --title-color: whitesmoke;
-  --board-border: 1px solid rgb(55, 61, 75);
-  --board-bg-color: rgba(29, 30, 34, 0.97);
+  --board-border: 1px solid rgb(33, 33, 31);
+  --board-bg-color: rgba(12, 13, 14, 0.97);
   --board-text: rgb(230, 230, 230);
-  --task-bg-color: #232323;
+  --task-bg-color: rgb(30, 30, 30);
   --task-border: 1px solid #181818;
   --task-time-text: antiquewhite;
   --task-edit-bg: rgb(20, 20, 20);
   --task-edit-border: 1px dashed rgb(50, 50, 50);
-  --task-reminder: 5px solid rgb(180, 173, 137); 
-  --button-toggle-bg: rgb(197, 190, 153); 
+  --task-reminder: 5px solid rgb(179, 165, 129); 
+  --button-toggle-bg: rgb(177, 159, 119); 
   --submit-input-bg: rgb(180, 173, 137); 
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
@@ -98,7 +98,7 @@ html[data-theme="Black / Sand"] {
   --modal-tab-highlight: 2px groove rgb(180, 173, 137);
   --link-accent-color: rgb(180, 173, 137); 
   --checkbox-color: rgb(198, 185, 120); 
-  --modal-button-bg: rgb(30, 30, 30);
+  --modal-button-bg: rgb(20, 20, 20);
   --modal-button-border: 1px solid rgb(40, 40, 40);
 }
 
@@ -123,15 +123,11 @@ html[data-theme="Black / Blue"] {
   --modal-tab-highlight: 2px groove skyblue;
   --link-accent-color: rgb(39, 131, 167);
   --checkbox-color: rgb(93, 195, 236);
-  --modal-button-bg: rgb(30, 30, 30);
+  --modal-button-bg: rgb(20, 20, 20);
   --modal-button-border: 1px solid rgb(40, 40, 40);
 }
 
 /* html body section */
-
-/* html, body, #root, .App {
-  height: 100%;
-} */
 
 body {
   font-family: 'Open Sans';
@@ -153,17 +149,28 @@ body {
   background-image: url("./pointing_meme_flat2.png");
 }
 
-/* Boards section */
+/* Board section */
 
-.boards {
-  max-width: 500px;
-  margin: 5px auto;
-  overflow: auto;
-  min-height: 300px;
+.board-container {
+  width: auto;
+  display: flex;
+  padding-inline: 2%;
+}
+
+.flex-child {
+  flex: 1;
+  width: 1px;
+  margin: 2%;
   border: var(--board-border);
-  padding: 15px;
-  border-radius: 5px;
   background-color: var(--board-bg-color);
+  border-radius: 5px;
+}
+
+.board {
+  max-width: 500px;
+  overflow: hidden;
+  min-height: 300px;
+  padding: 15px;
   color: var(--board-text);
 }
 
@@ -171,20 +178,9 @@ span {
   font-family: 'Montserrat';
 }
 
-.float-container {
-  padding: 20px;
-}
-
-.float-child {
-  width: 29%;
-  float: left;
-  padding: 2%;
-}
-
-.float-child h2 {
+.flex-child h2 {
   text-align: center;
   padding-bottom: 7px;
-  /* color: rgb(69, 105, 212); */
   font-weight: 400;
   margin-top: 10px;
 }
@@ -199,6 +195,10 @@ span {
   min-width: 300px;
   max-width: 380px;
   margin: 0 auto;
+}
+
+.header-container {
+  padding: 20px;
 }
 
 h1{
@@ -472,6 +472,7 @@ button.modal.selected {
   height: 25px;
   padding: 8px 8px 5px 6px;
   display: flex;
+  padding-left: 0;
 }
 
 .theme-buttons button{
@@ -491,10 +492,10 @@ svg {
 
 .modal-content-container span{
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
   font-style: italic;
-  padding-left: 8px;
+  /* padding-left: 8px; */
 }
 
 .modal-content-container input {

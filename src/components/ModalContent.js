@@ -11,14 +11,6 @@ const ModalContent = ({ content, changeTheme }) => {
   })
   const[hoveredTheme, setHoveredTheme] = useState("")
 
-  const getThemeName = () => {
-    if(hoveredTheme === "") {
-      return appliedTheme
-    } else {
-      return hoveredTheme
-    }
-  }
-
   const testChangeTheme = (param) => {
     console.log(param) 
     changeTheme(param)
@@ -55,7 +47,7 @@ const ModalContent = ({ content, changeTheme }) => {
             <BlackSand style={{height:'25px', width: '25px'}} />
           </button>
         </div>
-        <span>{getThemeName()}</span>
+        <span>{hoveredTheme === "" ? <b>{appliedTheme}</b> : hoveredTheme}</span>
         <p id="check">Pointing Mode:</p>
         <input 
           type='checkbox' 
