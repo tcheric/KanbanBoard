@@ -11,8 +11,8 @@ const SettingsModal = ({ open, onClose, changeTheme }) => {
 
   return (
     <>
-      <div className="modal-bg" onClick={(e)=> {e.stopPropagation(); console.log("bg clicked")}}>
-        <div className="popup">
+      <div className="modal-bg" onClick={onClose}>
+        <div className="popup" onClick={(e)=> {e.stopPropagation()}}>
           <div className="modal-header"> 
             <span>Settings</span>
             <Button 
