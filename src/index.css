@@ -18,6 +18,7 @@
   --task-edit-border: 1px dashed rgb(225, 225, 225);
   --task-reminder: 5px solid skyblue;
   --button-toggle-bg: rgb(126, 126, 126);
+  --button-toggle-filter: brightness(92%);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: hsl(0, 0%, 96%);
@@ -37,8 +38,8 @@ html[data-theme="Blue / White"] {
   --task-edit-bg: rgb(249, 249, 249);
   --task-edit-border: 1px dashed rgb(225, 225, 225);
   --task-reminder: 5px solid skyblue;
-  --button-toggle-bg: rgb(126, 126, 126);
   --button-toggle-bg: rgb(101, 145, 193);
+  --button-toggle-filter: brightness(92%);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: hsl(0, 0%, 96%);
@@ -64,8 +65,8 @@ html[data-theme="Red / White"] {
   --task-edit-bg: rgb(249, 249, 249);
   --task-edit-border: 1px dashed rgb(225, 225, 225);
   --task-reminder: 5px solid red;
-  --button-toggle-bg: rgb(126, 126, 126);
   --button-toggle-bg: rgb(182, 84, 84);
+  --button-toggle-filter: brightness(92%);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: hsl(0, 0%, 96%);
@@ -91,6 +92,7 @@ html[data-theme="Black / Sand"] {
   --task-edit-border: 1px dashed rgb(50, 50, 50);
   --task-reminder: 5px solid rgb(179, 165, 129); 
   --button-toggle-bg: rgb(177, 159, 119); 
+  --button-toggle-filter: brightness(1.5);
   --submit-input-bg: rgb(180, 173, 137); 
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
@@ -109,13 +111,14 @@ html[data-theme="Black / Blue"] {
   --board-border: 1px solid rgb(55, 61, 75);
   --board-bg-color: rgba(21, 24, 32, 0.97);
   --board-text: rgb(230, 230, 230);
-  --task-bg-color: #232323;
+  --task-bg-color: #202020;
   --task-border: 1px solid #181818;
   --task-time-text: antiquewhite;
   --task-edit-bg: rgb(20, 20, 20);
   --task-edit-border: 1px dashed rgb(50, 50, 50);
   --task-reminder: 5px solid rgb(58, 123, 167);
   --button-toggle-bg: rgb(73, 134, 175); 
+  --button-toggle-filter: brightness(1.5);
   --submit-input-bg: #4986af;
   --submit-input-color: black;
   --addtask-input-bg: rgb(58, 64, 82);
@@ -236,21 +239,22 @@ h1{
 
 .button.toggle.expanded {
   background: grey;
-  color: white;
+  background: var(--board-bg-color);
+  filter: var(--button-toggle-filter);
+  /* color: white; */
+  color: var(--button-toggle-bg);
 }
 
 .button.toggle:active {
   transform: scale(0.98);
+  filter: var(--button-toggle-filter);
 }
 
-/* #add.button.toggle {
-  width: 70px;
-} */
 
 .button.close {
   border: none;
   background: none;
-  color: rgba(100, 100, 100, 0.3);
+  color: rgba(130, 130, 130, 0.4);
 }
 
 #modal.button.close {
@@ -264,7 +268,7 @@ h1{
 
 #modal.button.close:hover {
   visibility: visible;
-  color: rgba(100, 100, 100, 0.7);
+  color: rgba(130, 130, 130, 0.8);
 } 
 
 button.modal {

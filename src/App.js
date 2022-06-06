@@ -131,12 +131,14 @@ const App = () => {
 
   return (
     <>
-      <Header 
-        toggleAddTask={toggleAddTask} 
-        showAdd={showAddTask} 
-        changeTheme={changeTheme}
-      />
-      {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
+      <div className="header-container">
+        <Header 
+          toggleAddTask={toggleAddTask} 
+          showAdd={showAddTask} 
+          changeTheme={changeTheme}
+        />
+        {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
+      </div>
       <div className="board-container">
         <Board 
           tasks={sortTasks(0)} 

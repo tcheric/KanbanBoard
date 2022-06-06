@@ -12,32 +12,29 @@ const Header = ({ title, toggleAddTask, showAdd, theme, changeTheme }) => {
   }
   
   return (
-    <div className="header-container">
-      <header className='header'>
-        <h1> { title } </h1>
-        <div className="buttons">
-          <Button 
-            id="add"
-            text={showAdd ? <FaMinus/> : <FaPlus/>}
-            type={`toggle ${showAdd ? "expanded" : ""}`}
-            onClick = {() => {
-              console.log('Click')
-              toggleAddTask()
-            }}
-          />
-          <Button 
-            text={<FaCog/>}
-            type="toggle"
-            onClick = {() => {
-              console.log('Click')
-              toggleModal()
-            }}
-          />
-        </div>
-        <SettingsModal open={showModal} onClose={toggleModal} changeTheme={changeTheme}/>
-      </header>
-    </div>
-
+    <header className='header'>
+      <h1> { title } </h1>
+      <div className="buttons">
+        <Button 
+          id="add"
+          text={showAdd ? <FaMinus/> : <FaPlus/>}
+          type={`toggle ${showAdd ? "expanded" : ""}`}
+          onClick = {() => {
+            console.log('Click')
+            toggleAddTask()
+          }}
+        />
+        <Button 
+          text={<FaCog/>}
+          type="toggle"
+          onClick = {() => {
+            console.log('Click')
+            toggleModal()
+          }}
+        />
+      </div>
+      <SettingsModal open={showModal} onClose={toggleModal} changeTheme={changeTheme}/>
+    </header>
   )
 }
 
