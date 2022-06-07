@@ -4,7 +4,7 @@ import { FaPlus, FaCog, FaMinus } from "react-icons/fa";
 import SettingsModal from "./SettingsModal"
 import { useState } from "react"
 
-const Header = ({ title, toggleAddTask, showAdd, theme, changeTheme }) => {
+const Header = ({ title, toggleAddTask, showAdd, changeTheme, togglePointing, pointing }) => {
   const [showModal, setShowModal] = useState(false)
 
   const toggleModal = () => {
@@ -33,7 +33,13 @@ const Header = ({ title, toggleAddTask, showAdd, theme, changeTheme }) => {
           }}
         />
       </div>
-      <SettingsModal open={showModal} onClose={toggleModal} changeTheme={changeTheme}/>
+      <SettingsModal 
+        open={showModal} 
+        onClose={toggleModal} 
+        changeTheme={changeTheme}
+        togglePointing={togglePointing}
+        pointing={pointing}
+      />
     </header>
   )
 }

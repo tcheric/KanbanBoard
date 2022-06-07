@@ -64,8 +64,8 @@ html[data-theme="Red / White"] {
   --task-time-text: black;
   --task-edit-bg: rgb(249, 249, 249);
   --task-edit-border: 1px dashed rgb(225, 225, 225);
-  --task-reminder: 5px solid red;
-  --button-toggle-bg: rgb(182, 84, 84);
+  --task-reminder: 5px solid rgb(228, 34, 34);
+  --button-toggle-bg: rgb(202, 58, 58);
   --button-toggle-filter: brightness(92%);
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
@@ -109,15 +109,15 @@ html[data-theme="Black / Blue"] {
   --text: white;
   --title-color: whitesmoke;
   --board-border: 1px solid rgb(55, 61, 75);
-  --board-bg-color: rgba(21, 24, 32, 0.97);
+  --board-bg-color: rgba(14, 16, 23, 0.97);
   --board-text: rgb(230, 230, 230);
   --task-bg-color: #202020;
   --task-border: 1px solid #181818;
   --task-time-text: antiquewhite;
   --task-edit-bg: rgb(20, 20, 20);
   --task-edit-border: 1px dashed rgb(50, 50, 50);
-  --task-reminder: 5px solid rgb(58, 123, 167);
-  --button-toggle-bg: rgb(73, 134, 175); 
+  --task-reminder: 5px solid rgb(43, 108, 151);
+  --button-toggle-bg: rgb(55, 108, 144); 
   --button-toggle-filter: brightness(1.5);
   --submit-input-bg: #4986af;
   --submit-input-color: black;
@@ -144,11 +144,17 @@ body {
 
 .dark-mode-body {
   background-color: black;
+}
+
+.dark-mode-body-point {
   background-image: url("./pointing_meme_flat3.png");
 }
 
 .light-mode-body {
   background-color: white;
+}
+
+.light-mode-body-point {
   background-image: url("./pointing_meme_flat2.png");
 }
 

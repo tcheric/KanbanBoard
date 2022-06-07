@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
-// import { createRef } from "react/cjs/react.development"
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -18,6 +17,16 @@ const App = () => {
     }
   })
 
+  const [pointing, setPointing] = useState(() => {
+    const pointingFromLS = JSON.parse(localStorage.getItem("pointing"))
+    if (pointingFromLS === "" || pointingFromLS === null) {
+      localStorage.setItem("pointing", "true")
+      return true
+    } else {
+      return pointingFromLS
+    }
+  })
+
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme")
   })
@@ -29,8 +38,10 @@ const App = () => {
     } else {
       changeTheme(themeFromLS)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Matches boards height
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
       let currMaxHeight = 0
@@ -40,7 +51,6 @@ const App = () => {
         }
       }
       setBoardHeight(currMaxHeight)
-      console.log("set!")
     })
     const boardElemList = document.querySelectorAll(".board")
     resizeObserver.observe(boardElemList[0])
@@ -55,22 +65,46 @@ const App = () => {
   }
 
   const changeTheme = newTheme => {
+    // Change elements color
     if (newTheme === "null") {
       localStorage.setItem("theme", "Red / White")
       changeTheme("Red / White")
       return
     }
-
     document.documentElement.setAttribute("data-theme", newTheme)
     setTheme(newTheme)
     localStorage.setItem("theme", newTheme) 
+
+    // Change background color and background image
+    document.body.classList.remove("light-mode-body-point");
+    document.body.classList.remove("light-mode-body");
+    document.body.classList.remove("dark-mode-body-point");
+    document.body.classList.remove("dark-mode-body");
     if (newTheme === "Black / Sand" || newTheme === "Black / Blue" ) {
-      document.body.classList.remove("light-mode-body");
       document.body.classList.add("dark-mode-body");
+      if (pointing) {
+        document.body.classList.add("dark-mode-body-point");
+      }
     } else if (newTheme === "Blue / White" || newTheme === "Red / White" ) {
-      document.body.classList.remove("dark-mode-body");
       document.body.classList.add("light-mode-body");
+      if (pointing) {
+        document.body.classList.add("light-mode-body-point");
+      }
     }
+  }
+  
+  // Toggle pointing useState and apply css. LocalStorage value changed in ModalContent.js
+  const togglePointing = () => {
+    setPointing(!pointing)
+    let cssClass
+    if (theme === "Black / Sand" || theme === "Black / Blue" ) {
+      cssClass = "dark-mode-body-point"
+    } else {
+      cssClass = "light-mode-body-point"
+    }
+    pointing 
+      ? document.body.classList.remove(cssClass) 
+      : document.body.classList.add(cssClass)
   }
     
   const toggleAddTask = () => {
@@ -146,6 +180,8 @@ const App = () => {
           toggleAddTask={toggleAddTask} 
           showAdd={showAddTask} 
           changeTheme={changeTheme}
+          togglePointing={togglePointing}
+          pointing={pointing}
         />
         {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
       </div>

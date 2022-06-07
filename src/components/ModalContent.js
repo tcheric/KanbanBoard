@@ -5,16 +5,21 @@ import { ReactComponent as BlackBlue } from '../blackblue.svg'
 import { ReactComponent as BlackSand } from '../blacksand.svg'
 import { useState } from "react"
 
-const ModalContent = ({ content, changeTheme }) => {
+const ModalContent = ({ content, changeTheme, togglePointing, pointing }) => {
   const[appliedTheme, setAppliedTheme] = useState(() => {
     return localStorage.getItem("theme")
   })
   const[hoveredTheme, setHoveredTheme] = useState("")
 
-  const testChangeTheme = (param) => {
-    console.log(param) 
-    changeTheme(param)
-    setAppliedTheme(param)
+  const testChangeTheme = (newTheme) => {
+    console.log(newTheme) 
+    changeTheme(newTheme)
+    setAppliedTheme(newTheme)
+  }
+
+  const handleCheckbox = () => {
+    localStorage.setItem("pointing", !pointing)
+    togglePointing()
   }
 
   if (content === "Themes") {
@@ -51,9 +56,9 @@ const ModalContent = ({ content, changeTheme }) => {
         <p id="check">Pointing Mode:</p>
         <input 
           type='checkbox' 
-          // checked={reminder}
-          // value={reminder} 
-          // onChange={(e) => setReminder(e.currentTarget.checked)}  
+          checked={pointing}
+          value={pointing} 
+          onChange={(e) => handleCheckbox()}  
         />
       </div>
     )
