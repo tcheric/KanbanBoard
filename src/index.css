@@ -3,7 +3,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
-
 :root {
   --background: white;
   --text: black;
@@ -50,7 +49,6 @@ html[data-theme="Blue / White"] {
   --modal-button-bg: rgb(251, 251, 251);
   --modal-button-border: 1px solid rgb(237, 237, 237);
 }
-
 
 html[data-theme="Red / White"] {
   --background: white;
@@ -247,7 +245,6 @@ h1{
   background: grey;
   background: var(--board-bg-color);
   filter: var(--button-toggle-filter);
-  /* color: white; */
   color: var(--button-toggle-bg);
 }
 
@@ -362,6 +359,8 @@ button.modal.selected {
 .form-control label {
   display: block;
   color: var(--text);
+  font-weight: 500;
+  font-size: 17px;
 }
 
 .form-control input {
@@ -372,8 +371,12 @@ button.modal.selected {
   font-size: 17px;
   box-sizing: border-box;
   background-color: var(--addtask-input-bg);
+  color: var(--text);
   border: 1px #f4f4f4;
   border-radius: 6px;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 5px 0px rgb(189, 191, 196);
 }
 
 .form-control input::placeholder {
