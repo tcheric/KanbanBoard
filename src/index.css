@@ -514,7 +514,6 @@ svg {
   font-size: 13px;
   margin-bottom: 10px;
   font-style: italic;
-  /* padding-left: 8px; */
 }
 
 .modal-content-container input {
@@ -551,4 +550,64 @@ p#opening {
   margin-bottom: 15px;
   margin-top: 6px;
   text-align: center;
+}
+
+/* Resize section */
+@media (max-width: 1000px) 
+{
+  .board-container {
+    flex-direction: column;
+  }
+
+  .flex-child {
+    flex: 1;
+    width: auto;
+    margin-inline: 10%;
+    margin-block: 10px;
+  }
+
+  .board {
+    min-height: 100px;
+    margin: 0;
+    max-width: none;
+    padding-top: 10px;
+  }
+
+  .flex-child h2 {
+    text-align: center;
+    padding-bottom: 7px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .header-container {
+    padding: 0;
+  }
+
+  .header {
+    width: 400px;
+  } 
+
+  .add-form {
+    margin-inline: 8%;
+    margin-bottom: 20px;
+  }
+
+  .add-form .form-control{
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .header {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+  } 
+
+  .header h1{
+    margin-bottom: 0;
+  } 
 }
