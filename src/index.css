@@ -567,7 +567,7 @@ p#opening {
   }
 
   .board {
-    min-height: 100px;
+    min-height: 80px;
     margin: 0;
     max-width: none;
     padding-top: 10px;
