@@ -15,4 +15,8 @@ A Kanban Board application where a user can write down tasks in a "To-do", "Doin
 
 ## Bonus features
 
--   [ ] User can toggle dark mode
+-   [ ] User can edit task names
+-   [ ] User can toggle pointing guys
+-   [ ] User can select from multiple themes
+-   [ ] User can read Help section
+-   [ ] Responsive for smaller screens including mobile
