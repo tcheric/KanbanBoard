@@ -138,6 +138,33 @@ html[data-theme="Black / Blue"] {
   --modal-button-border: 1px solid rgb(40, 40, 40);
 }
 
+html[data-theme="Dark / Red"] {
+  --background: #141617;
+  --text: #f9f7f4;
+  --title-color: #e4e0db;
+  --board-border: 1px solid #666769;
+  --board-bg-color: rgba(22, 24, 26, 0.97);
+  --board-text: #f9f7f4;
+  --task-bg-color: #1e2122;
+  --task-border: none;
+  --task-time-text: #f9f7f4;
+  --task-edit-bg: #171b1c;
+  --task-edit-border: 1px dashed rgb(119, 119, 119);
+  --task-reminder: 5px solid #e42222;
+  --button-toggle-bg: rgb(202, 58, 58);
+  --button-toggle-filter: brightness(92%);
+  --submit-input-bg: #2a2b2b;
+  --submit-input-color: #f9f7f4;
+  --addtask-input-bg: #1b1d1e;
+  --addtask-input-shadow: 0 0 3px 1px #4e4e4e;
+  --addtask-input-text: #b9b2a6;
+  --modal-tab-highlight: 2px groove red;
+  --link-accent-color: rgb(191, 31, 31);
+  --checkbox-color: rgb(205, 57, 57);
+  --modal-button-bg: #1b1d20;
+  --modal-button-border: 1px solid rgb(49, 49, 49);
+}
+
 /* html body section */
 
 body {
@@ -150,12 +177,12 @@ body {
   background-attachment: fixed;
 }
 
-.dark-mode-body {
+.black-mode-body {
   background-color: black;
 }
 
-.dark-mode-body-point {
-  background-image: url("./pointing_meme_flat3.png");
+.black-mode-body-point {
+  background-image: url("./pointing_meme_black.png");
 }
 
 .light-mode-body {
@@ -163,7 +190,16 @@ body {
 }
 
 .light-mode-body-point {
-  background-image: url("./pointing_meme_flat2.png");
+  background-image: url("./pointing_meme_white.png");
+}
+
+.dark-mode-body {
+  background-color: rgb(19,21,22);
+}
+
+/* Lunapic fill color #1a1c1d */
+.dark-mode-body-point {
+  background-image: url("./pointing_meme_dark.png");
 }
 
 /* Board section */
@@ -198,7 +234,7 @@ span {
 .flex-child h2 {
   text-align: center;
   padding-bottom: 7px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 10px;
 }
 
@@ -323,7 +359,7 @@ button.modal.selected {
 .task h3 {
   margin: 0;
   padding: 0;
-  font-weight: normal;
+  font-weight: 500;
   min-width: 75px;
 }
 
@@ -370,7 +406,7 @@ button.modal.selected {
 .form-control label {
   display: block;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .form-control input {
@@ -381,7 +417,7 @@ button.modal.selected {
   font-size: 17px;
   box-sizing: border-box;
   background-color: var(--addtask-input-bg);
-  color: var(--text);
+  color: var(--checkbox-color);
   border: 1px #f4f4f4;
   border-radius: 6px;
   -moz-box-shadow: var(--addtask-input-shadow);
@@ -583,7 +619,7 @@ p#opening {
   .flex-child h2 {
     text-align: center;
     padding-bottom: 7px;
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 5px;
     margin-top: 0;
     width: 100%;

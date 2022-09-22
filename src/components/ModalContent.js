@@ -3,6 +3,7 @@ import { ReactComponent as BlueWhite } from '../bluewhite.svg'
 import { ReactComponent as RedWhite } from '../redwhite.svg'
 import { ReactComponent as BlackBlue } from '../blackblue.svg'
 import { ReactComponent as BlackSand } from '../blacksand.svg'
+import { ReactComponent as DarkRed } from '../darkred.svg'
 import { useState } from "react"
 
 const ModalContent = ({ content, changeTheme, togglePointing, pointing }) => {
@@ -40,6 +41,12 @@ const ModalContent = ({ content, changeTheme, togglePointing, pointing }) => {
             <RedWhite style={{height:'25px', width: '25px'}}/>
           </button>          
           <button 
+            onClick={() => testChangeTheme("Dark / Red")} 
+            onMouseEnter={() => setHoveredTheme("Dark / Red")} 
+            onMouseLeave={() => setHoveredTheme("")}>
+            <DarkRed style={{height:'25px', width: '25px'}} />
+          </button>
+          <button 
             onClick={() => testChangeTheme("Black / Blue")} 
             onMouseEnter={() => setHoveredTheme("Black / Blue")} 
             onMouseLeave={() => setHoveredTheme("")}>
@@ -51,6 +58,7 @@ const ModalContent = ({ content, changeTheme, togglePointing, pointing }) => {
             onMouseLeave={() => setHoveredTheme("")}>
             <BlackSand style={{height:'25px', width: '25px'}} />
           </button>
+
         </div>
         <span>{hoveredTheme === "" ? <b>{appliedTheme}</b> : hoveredTheme}</span>
         <p id="check">Pointing Mode:</p>

@@ -78,17 +78,24 @@ const App = () => {
     // Change background color and background image
     document.body.classList.remove("light-mode-body-point");
     document.body.classList.remove("light-mode-body");
+    document.body.classList.remove("black-mode-body-point");
+    document.body.classList.remove("black-mode-body");
     document.body.classList.remove("dark-mode-body-point");
     document.body.classList.remove("dark-mode-body");
     if (newTheme === "Black / Sand" || newTheme === "Black / Blue" ) {
-      document.body.classList.add("dark-mode-body");
+      document.body.classList.add("black-mode-body");
       if (pointing) {
-        document.body.classList.add("dark-mode-body-point");
+        document.body.classList.add("black-mode-body-point");
       }
     } else if (newTheme === "Blue / White" || newTheme === "Red / White" ) {
       document.body.classList.add("light-mode-body");
       if (pointing) {
         document.body.classList.add("light-mode-body-point");
+      }
+    } else if (newTheme === "Dark / Red" ) {
+      document.body.classList.add("dark-mode-body");
+      if (pointing) {
+        document.body.classList.add("dark-mode-body-point");
       }
     }
   }
@@ -98,7 +105,7 @@ const App = () => {
     setPointing(!pointing)
     let cssClass
     if (theme === "Black / Sand" || theme === "Black / Blue" ) {
-      cssClass = "dark-mode-body-point"
+      cssClass = "black-mode-body-point"
     } else {
       cssClass = "light-mode-body-point"
     }
