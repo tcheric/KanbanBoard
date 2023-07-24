@@ -106,6 +106,8 @@ const App = () => {
     let cssClass
     if (theme === "Black / Sand" || theme === "Black / Blue" ) {
       cssClass = "black-mode-body-point"
+    } else if (theme === "Dark / Red") {
+      cssClass = "dark-mode-body-point"
     } else {
       cssClass = "light-mode-body-point"
     }
