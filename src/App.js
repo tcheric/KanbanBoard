@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -182,6 +183,10 @@ const App = () => {
     updateTasks()
   }
 
+  const onDragEnd = result => {  
+    
+  }
+
   return (
     <>
       <div className="header-container">
@@ -195,36 +200,54 @@ const App = () => {
         {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
       </div>
       <div className="board-container">
-        <Board 
-          tasks={sortTasks(0)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="To-do:"
-          height={boardHeight}
-        />
-        <Board 
-          tasks={sortTasks(1)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="Doing:"
-          height={boardHeight}
-          /> 
-        <Board 
-          tasks={sortTasks(2)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="Done:"
-          height={boardHeight}
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="0">
+            {provided => (
+              <Board 
+                innerRef={provided.innerRef}
+                tasks={sortTasks(0)} 
+                onDelete={deleteTask} 
+                onToggle={toggleReminder} 
+                onBackwards={moveBackwards} 
+                onForward={moveForward} 
+                onEdit={editTask}
+                name="To-do:"
+                height={boardHeight}
+                {...provided.droppableProps}
+              />
+            )}
+          </Droppable>
+          <Droppable droppableId="1">
+            {provided => (
+              <Board 
+                innerRef={provided.innerRef}
+                tasks={sortTasks(1)} 
+                onDelete={deleteTask} 
+                onToggle={toggleReminder} 
+                onBackwards={moveBackwards} 
+                onForward={moveForward} 
+                onEdit={editTask}
+                name="Doing:"
+                height={boardHeight}
+              /> 
+            )}
+          </Droppable>
+          <Droppable droppableId="2">
+            {provided => (
+              <Board 
+                innerRef={provided.innerRef}
+                tasks={sortTasks(2)} 
+                onDelete={deleteTask} 
+                onToggle={toggleReminder} 
+                onBackwards={moveBackwards} 
+                onForward={moveForward} 
+                onEdit={editTask}
+                name="Done:"
+                height={boardHeight}
+              />
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
     </>
   );

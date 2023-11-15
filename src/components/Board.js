@@ -1,7 +1,7 @@
 import React from 'react'
-// import { createRef, useState, useEffect } from "react"
-// import { useCallback } from "react/cjs/react.production.min"
 import Task from './Task'
+import { Draggable } from '@hello-pangea/dnd';
+
 
 const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, name, height }) => {
   
@@ -10,17 +10,22 @@ const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, on
       <div className="board">
         <h2><u>{name}</u></h2>
         {tasks.length > 0 ? (
-          tasks.map((task) => (
-            <Task 
-              key={task.id} 
-              task={task} 
-              onBackwards={onBackwards} 
-              onForward={onForward} 
-              onDelete={onDelete} 
-              onToggle={onToggle}
-              onEdit={onEdit}
-              darkMode={darkMode}>
-            </Task>
+          tasks.map((task, index) => (
+            <Draggable draggableId={task.id.toString()} index={index} key={task.id} >
+              {provided => (
+                <Task 
+                  task={task}
+                  onBackwards={onBackwards} 
+                  onForward={onForward} 
+                  onDelete={onDelete} 
+                  onToggle={onToggle}
+                  onEdit={onEdit}
+                  darkMode={darkMode}
+                  provided={provided}
+                  innerRef={provided.innerRef}>
+                </Task>
+              )}
+            </Draggable>
           ))
         ) : (
           <span>- No tasks -</span>
