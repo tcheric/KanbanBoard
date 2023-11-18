@@ -2,18 +2,21 @@ import React from 'react'
 import Task from './Task'
 import {useDroppable} from '@dnd-kit/core';
 
-const Board = ({ tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, name, height }) => {
+const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, height }) => {
   const {isOver, setNodeRef} = useDroppable({
-    id: 'droppable',
+    // id: id.toString(),
+    id: id
   })
+  const names = ["To-do:", "Doing:", "Done:"]
 
   return (
     <div className="flex-child" style={{height: `${height}`}} ref={setNodeRef}>
       <div className="board">
-        <h2><u>{name}</u></h2>
+        <h2><u>{names[id]}</u></h2>
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <Task 
+              key={task.id}
               task={task}
               onBackwards={onBackwards} 
               onForward={onForward} 

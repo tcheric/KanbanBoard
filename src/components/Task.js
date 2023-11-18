@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FiCheck, FiChevronLeft, FiChevronRight, FiX, FiMoreHorizontal } from "react-icons/fi"
 import { useDraggable } from '@dnd-kit/core'
+import {CSS} from '@dnd-kit/utilities';
 
 const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMode}) => {
   const [showEditField, setShowEditField] = useState(false)
@@ -11,9 +12,9 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
     id: task.id.toString(),
   })
 
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  }
   // DnD end
 
   const taskEdit = () => {

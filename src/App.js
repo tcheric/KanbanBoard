@@ -7,6 +7,8 @@ import {DndContext} from '@dnd-kit/core'
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [boardHeight, setBoardHeight] = useState(100)
+  const [isDropped, setIsDropped] = useState(false)
+  const boardsIds = [0, 1, 2]
 
   const [tasks, setTasks] = useState(() => {
     const stringTasks = localStorage.getItem("tasks")
@@ -183,12 +185,17 @@ const App = () => {
     updateTasks()
   }
 
-  const onDragEnd = result => {  
-    
+  const handleDragEnd = event => {  
+    if (event.over && event.over.id === 1) {
+      setIsDropped(true);
+      console.log("dropped!")
+    }
   }
+  // const handleDragEnd = event => {  
+  // }
 
   return (
-    <DndContext>
+    <DndContext onDragEnd={handleDragEnd}>
       <div className="header-container">
         <Header 
           toggleAddTask={toggleAddTask} 
@@ -200,36 +207,19 @@ const App = () => {
         {showAddTask && <AddTask onAdd={addTask} tasks={tasks} darkMode={theme}/>}
       </div>
       <div className="board-container">
-        <Board 
-          tasks={sortTasks(0)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="To-do:"
-          height={boardHeight}
-        />
-        <Board 
-          tasks={sortTasks(1)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="Doing:"
-          height={boardHeight}
-        /> 
-        <Board 
-          tasks={sortTasks(2)} 
-          onDelete={deleteTask} 
-          onToggle={toggleReminder} 
-          onBackwards={moveBackwards} 
-          onForward={moveForward} 
-          onEdit={editTask}
-          name="Done:"
-          height={boardHeight}
-        />
+        {boardsIds.map((id) => (
+          <Board 
+            key={id} 
+            id={id}
+            tasks={sortTasks(id)} 
+            onDelete={deleteTask} 
+            onToggle={toggleReminder} 
+            onBackwards={moveBackwards} 
+            onForward={moveForward} 
+            onEdit={editTask}
+            height={boardHeight}
+          />
+        ))}
       </div>
     </DndContext>
   );
