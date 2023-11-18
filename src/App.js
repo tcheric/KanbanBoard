@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
+import {DndContext} from '@dnd-kit/core'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -187,7 +188,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <DndContext>
       <div className="header-container">
         <Header 
           toggleAddTask={toggleAddTask} 
@@ -230,7 +231,7 @@ const App = () => {
           height={boardHeight}
         />
       </div>
-    </>
+    </DndContext>
   );
 }
 // *If showAddTask is true, then <...> will execute. "short circuit evaluation"
