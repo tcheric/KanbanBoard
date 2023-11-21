@@ -186,9 +186,11 @@ const App = () => {
   }
 
   const handleDragEnd = event => {  
-    if (event.over && event.over.id === 1) {
+    // if (event.over && event.over.id === 1) {
+    if (event.over) {
       setIsDropped(true);
       console.log("dropped!")
+      
     }
   }
   // const handleDragEnd = event => {  

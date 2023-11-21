@@ -45,7 +45,7 @@ const Header = ({ title, toggleAddTask, showAdd, changeTheme, togglePointing, po
 }
 
 Header.defaultProps = {
-  title: 'Kanban Board.',
+  title: 'Kanban Board',
 }
 
 Header.propTypes = {

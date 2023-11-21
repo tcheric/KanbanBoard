@@ -227,7 +227,7 @@ body {
 
 .board {
   max-width: 500px;
-  overflow: hidden;
+  /* overflow: hidden; */
   min-height: 300px;
   padding: 15px;
   color: var(--board-text);
@@ -260,10 +260,18 @@ span {
   padding: 20px;
 }
 
+@font-face {
+  font-family: 'Changa';
+  src: url('fonts/Changa-VariableFont_wght.ttf') format('truetype');
+}
+
 h1{
-  padding-right: 0px;
+  padding-right: 30px;
   min-width: 240px;
   color: var(--title-color);
+  font-family: "Changa";
+  font-weight: 400;
+  font-size: 36px;
 }
 
 .header .buttons{
