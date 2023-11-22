@@ -153,7 +153,7 @@ const App = () => {
       }
       return item
     })
-    console.log(tasks)
+    // console.log(tasks)
     localStorage.setItem("tasks", JSON.stringify(updatedTasks))
     updateTasks()
   }
@@ -185,16 +185,22 @@ const App = () => {
     updateTasks()
   }
 
+  const moveToBoard = (taskId, boardId) => {  
+    const updatedTasks = tasks.map(item => {
+      if (item.id === taskId) (item.board = boardId)
+      return item
+    })
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+    updateTasks()
+  }
+
   const handleDragEnd = event => {  
-    // if (event.over && event.over.id === 1) {
-    if (event.over) {
-      setIsDropped(true);
-      console.log("dropped!")
-      
+    const {active, over} = event
+    if (over) {
+      setIsDropped(true)
+      moveToBoard(parseInt(active.id), event.over.id)
     }
   }
-  // const handleDragEnd = event => {  
-  // }
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
