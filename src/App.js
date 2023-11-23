@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
-import {DndContext} from '@dnd-kit/core'
+import { DndContext, useSensor, useSensors, MouseSensor, TouchSensor, PointerSensor } from '@dnd-kit/core'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -202,8 +202,17 @@ const App = () => {
     }
   }
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 6
+      },
+    })
+  )
+
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+    {/* <DndContext onDragEnd={handleDragEnd}> */}
       <div className="header-container">
         <Header 
           toggleAddTask={toggleAddTask} 

@@ -4,7 +4,6 @@ import {useDroppable} from '@dnd-kit/core';
 
 const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, height }) => {
   const {isOver, setNodeRef} = useDroppable({
-    // id: id.toString(),
     id: id
   })
   const names = ["To-do:", "Doing:", "Done:"]
