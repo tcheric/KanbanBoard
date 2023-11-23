@@ -50,8 +50,8 @@ html[data-theme="Blue / White"] {
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: rgb(250, 250, 252);
-  --addtask-input-shadow:0 0 0px 1px rgb(160, 160, 160);
-  --addtask-input-text: rgb(119, 117, 117);
+  --addtask-input-shadow:0 0 0px 2px rgb(150, 150, 150);
+  --addtask-input-text: rgb(109, 107, 107);
   --modal-tab-highlight: 2px groove skyblue;
   --link-accent-color: rgb(39, 131, 167);
   --checkbox-color: rgb(93, 195, 236);
@@ -78,8 +78,8 @@ html[data-theme="Red / White"] {
   --submit-input-bg: rgb(31, 31, 31);
   --submit-input-color: white;
   --addtask-input-bg: #f1f1f1;
-  --addtask-input-shadow:0 0 0px 1px rgb(128, 125, 125);
-  --addtask-input-text: rgb(119, 117, 117);
+  --addtask-input-shadow:0 0 0px 2px rgb(150, 150, 150);
+  --addtask-input-text: rgb(109, 107, 107);
   --modal-tab-highlight: 2px groove red;
   --link-accent-color: rgb(191, 31, 31);
   --checkbox-color: rgb(205, 57, 57);
@@ -226,7 +226,6 @@ body {
 }
 
 .board {
-  max-width: 500px;
   /* overflow: hidden; */
   min-height: 300px;
   padding: 15px;
@@ -257,7 +256,7 @@ span {
 }
 
 .header-container {
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
 }
 
 @font-face {
@@ -272,6 +271,7 @@ h1{
   font-family: "Changa";
   font-weight: 400;
   font-size: 36px;
+  margin-bottom: 0.5em;
 }
 
 .header .buttons{
@@ -411,10 +411,12 @@ button.modal.selected {
   padding: 0px;
   margin-left: 30%;
   margin-right: 30%;
+  margin-bottom: 10px;
 }
 
 .form-control {
-  margin: 12px 0px;
+  /* margin: 12px 0px; */
+  margin: 0px 0px 10px 0px;
   font-size: 17px;
 }
 
