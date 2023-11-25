@@ -1,21 +1,12 @@
 import { useState } from "react"
 import { FiCheck, FiChevronLeft, FiChevronRight, FiX, FiMoreHorizontal } from "react-icons/fi"
 import { useDraggable } from '@dnd-kit/core'
+import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from '@dnd-kit/utilities';
 
 const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMode}) => {
   const [showEditField, setShowEditField] = useState(false)
   const [newName, setNewName] = useState("")
-
-  // DnD start
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: task.id.toString(),
-  })
-
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  }
-  // DnD end
 
   const taskEdit = () => {
     setShowEditField(true)
@@ -29,8 +20,42 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
     setNewName("")
   }
 
+  const {
+    attributes: draggableAttributes, 
+    listeners: draggableListeners, 
+    setNodeRef: draggableSetNodeRef , 
+    transform: draggableTransform} = useDraggable({
+    id: task.id.toString(),
+  })
+  
+  const {
+    attributes: sortableAttributes, 
+    listeners: sortableListeners, 
+    setNodeRef: sortableSetNodeRef , 
+    transform: sortableTransform,
+    transition} = useSortable({
+    id: task.id.toString(),
+  })
+
+  const style = {
+    transform: CSS.Translate.toString(draggableTransform),
+    transition,
+  }
+  
+  const setNodeRef = node => {
+    sortableSetNodeRef(node);
+    draggableSetNodeRef(node);
+  }
+
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    // <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div 
+      ref={setNodeRef} 
+      style={style}
+      {...sortableAttributes}
+      {...sortableListeners}
+      {...draggableAttributes}
+      {...draggableListeners}>
       <div 
         className={`task ${task.reminder ? 'reminder' : ''}`} 
         onDoubleClick={() => onToggle(task.id)}

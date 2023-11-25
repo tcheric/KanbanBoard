@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
-import { DndContext, useSensor, useSensors, MouseSensor, TouchSensor, PointerSensor } from '@dnd-kit/core'
+import { DndContext, useSensor, useSensors, KeyboardSensor, PointerSensor, closestCenter } from '@dnd-kit/core'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -33,6 +34,23 @@ const App = () => {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme")
   })
+
+  const sortTasksv2 = () => {
+    let arr = [[], [], []]
+    for (const t of tasks){
+      // t.board is boardID, ie. 0, 1, 2, 999(backlog)
+      if (t.board === 0) {
+        arr[0].push(t)
+      } else if (t.board === 1) {
+        arr[1].push(t)
+      }  else if (t.board === 2) {
+        arr[2].push(t)
+      } 
+    } 
+    return arr 
+  }
+
+  const [tasksByBoard, setTasksByBoard] = useState(sortTasksv2)
 
   useEffect(() => {
     const themeFromLS = localStorage.getItem("theme")
@@ -65,6 +83,7 @@ const App = () => {
     const stringTasks = localStorage.getItem("tasks")
     const tasksFromLocal = JSON.parse(stringTasks)
     setTasks(tasksFromLocal)
+    // setTasksByBoard()
   }
 
   const changeTheme = newTheme => {
@@ -146,6 +165,13 @@ const App = () => {
     updateTasks()
   }
 
+  const getTask = id => {
+    console.log(id)
+    const result = tasks.find((item) => item.id === id)
+    return result
+  }
+
+
   const toggleReminder = id => {
     const updatedTasks = tasks.map(item => {
       if (item.id === id) {
@@ -195,11 +221,31 @@ const App = () => {
   }
 
   const handleDragEnd = event => {  
+    // Active describes the draggable (task). Over describes the droppable (board)
+    console.log(event)
     const {active, over} = event
-    if (over) {
+
+    if (typeof over.id === "string") {
+      console.log("Dropped on task")
+      if (getTask(parseInt(over.id)).board === getTask(parseInt(active.id)).board) {
+        console.log("It's the same board")
+      }
+    } else if (typeof over.id === "number") {
+      console.log("Dropped on board")
       setIsDropped(true)
       moveToBoard(parseInt(active.id), event.over.id)
     }
+
+    // const {active, over} = event;
+    
+    // if (active.id !== over.id) {
+    //   setItems((items) => {
+    //     const oldIndex = items.indexOf(active.id);
+    //     const newIndex = items.indexOf(over.id);
+        
+    //     return arrayMove(items, oldIndex, newIndex);
+    //   });
+    // }
   }
 
   const sensors = useSensors(
@@ -207,12 +253,11 @@ const App = () => {
       activationConstraint: {
         distance: 6
       },
-    })
+    }),
   )
 
   return (
-    <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-    {/* <DndContext onDragEnd={handleDragEnd}> */}
+    <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCenter}>
       <div className="header-container">
         <Header 
           toggleAddTask={toggleAddTask} 
@@ -225,10 +270,12 @@ const App = () => {
       </div>
       <div className="board-container">
         {boardsIds.map((id) => (
+          // <SortableContext key={id} items={sortTasks(id)} strategy={verticalListSortingStrategy}>
           <Board 
             key={id} 
             id={id}
             tasks={sortTasks(id)} 
+            // tasks={tasksByBoard[id]} 
             onDelete={deleteTask} 
             onToggle={toggleReminder} 
             onBackwards={moveBackwards} 
@@ -236,6 +283,7 @@ const App = () => {
             onEdit={editTask}
             height={boardHeight}
           />
+          // </SortableContext>
         ))}
       </div>
     </DndContext>
