@@ -19,43 +19,66 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMo
     }
     setNewName("")
   }
-
-  const {
-    attributes: draggableAttributes, 
-    listeners: draggableListeners, 
-    setNodeRef: draggableSetNodeRef , 
-    transform: draggableTransform} = useDraggable({
-    id: task.id.toString(),
-  })
   
   const {
-    attributes: sortableAttributes, 
-    listeners: sortableListeners, 
-    setNodeRef: sortableSetNodeRef , 
-    transform: sortableTransform,
-    transition} = useSortable({
-    id: task.id.toString(),
+    attributes, 
+    listeners, 
+    setNodeRef , 
+    transform,
+    transition,
+    isDragging
+  } = useSortable({id: task.id,
+    data: {
+      type:"Task",
+      task
+    }
   })
 
   const style = {
-    transform: CSS.Translate.toString(draggableTransform),
+    transform: CSS.Translate.toString(transform),
     transition,
   }
-  
-  const setNodeRef = node => {
-    sortableSetNodeRef(node);
-    draggableSetNodeRef(node);
+
+  const addedStyle = {
+    // transform: CSS.Translate.toString(transform),
+    color: 'blue',
+    lineHeight: 10,
+    padding: '1.5em',
+    // transition,
   }
 
+  // if (isDragging) {
+  //   // return <div>Dragging</div>
+  //   <div ref={setNodeRef} style={addedStyle} {...listeners} {...attributes}>
+  //     <div 
+  //       className={`task ${task.reminder ? 'reminder' : ''}`} 
+  //       onDoubleClick={() => onToggle(task.id)}
+  //     >
+  //       <div className="task-left">
+  //         <h3>
+  //           {!showEditField && <p>{task.name}</p>}
+  //           {showEditField && <input 
+  //             type='text' 
+  //             placeholder={task.name}
+  //             value = {newName} 
+  //             onChange={(e) => setNewName(e.target.value)}
+  //             />}
+  //         </h3>
+  //         <h5>{task.day}</h5>
+  //       </div>
+  //       <div className="task-buttons">
+  //         {!showEditField && <FiMoreHorizontal onClick={() => taskEdit(task.id)}/>}
+  //         {showEditField && <FiCheck onClick={() => taskEditSubmit(task.id)}/>}
+  //         <FiChevronLeft onClick={() => onBackwards(task.id)}/>
+  //         <FiChevronRight onClick={() => onForward(task.id)}/>
+  //         <FiX onClick={() => onDelete(task.id)}/>
+  //       </div>
+  //     </div>
+  //   </div>
+  // }
+
   return (
-    // <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-    <div 
-      ref={setNodeRef} 
-      style={style}
-      {...sortableAttributes}
-      {...sortableListeners}
-      {...draggableAttributes}
-      {...draggableListeners}>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <div 
         className={`task ${task.reminder ? 'reminder' : ''}`} 
         onDoubleClick={() => onToggle(task.id)}

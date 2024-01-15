@@ -166,9 +166,7 @@ const App = () => {
   }
 
   const getTask = id => {
-    console.log(id)
-    const result = tasks.find((item) => item.id === id)
-    return result
+    return tasks.find((item) => item.id === id)
   }
 
 
@@ -221,31 +219,21 @@ const App = () => {
   }
 
   const handleDragEnd = event => {  
-    // Active describes the draggable (task). Over describes the droppable (board)
     console.log(event)
     const {active, over} = event
 
-    if (typeof over.id === "string") {
+    if (over.data.current.type === "Task") {
       console.log("Dropped on task")
-      if (getTask(parseInt(over.id)).board === getTask(parseInt(active.id)).board) {
+      if (getTask(over.id).board === getTask(active.id).board) {
         console.log("It's the same board")
+      } else {
+        console.log("It's another board")
       }
-    } else if (typeof over.id === "number") {
+    } else if (over.data.current.type === "Board") {
       console.log("Dropped on board")
       setIsDropped(true)
-      moveToBoard(parseInt(active.id), event.over.id)
+      moveToBoard(active.id, event.over.id)
     }
-
-    // const {active, over} = event;
-    
-    // if (active.id !== over.id) {
-    //   setItems((items) => {
-    //     const oldIndex = items.indexOf(active.id);
-    //     const newIndex = items.indexOf(over.id);
-        
-    //     return arrayMove(items, oldIndex, newIndex);
-    //   });
-    // }
   }
 
   const sensors = useSensors(
