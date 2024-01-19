@@ -24,6 +24,7 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode
 
   // Issue right now: drag animation not working, cannot reorder within same list, code very obfuscated
   // Within p2dnd, have implemented base functionality, need to fix buggy task/board mvmt behaviour and we good
+  // Working on implementing dragOverlay and board move case
   return (
       <div className="flex-child" style={{height: `${height}`}} ref={setNodeRef}>
         <div className="board">
