@@ -3,6 +3,7 @@ import { FiCheck, FiChevronLeft, FiChevronRight, FiX, FiMoreHorizontal } from "r
 import { useDraggable } from '@dnd-kit/core'
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from '@dnd-kit/utilities';
+import classNames from "classnames"
 
 const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOverlay}) => {
   const [showEditField, setShowEditField] = useState(false)
@@ -21,12 +22,12 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOv
   }
   
   const {
-    attributes, 
-    listeners, 
-    setNodeRef , 
+    setNodeRef,
+    attributes,
+    listeners,
     transform,
     transition,
-    isDragging
+    isDragging,
   } = useSortable({id: task.id,
     data: {
       type:"Task",
@@ -39,48 +40,19 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOv
     transition,
   }
 
-  const addedStyle = {
-    // transform: CSS.Translate.toString(transform),
-    color: 'blue',
-    lineHeight: 10,
-    padding: '1.5em',
-    // transition,
-  }
-
-  // if (isDragging) {
-  //   // return <div>Dragging</div>
-  //   <div ref={setNodeRef} style={addedStyle} {...listeners} {...attributes}>
-  //     <div 
-  //       className={`task ${task.reminder ? 'reminder' : ''}`} 
-  //       onDoubleClick={() => onToggle(task.id)}
-  //     >
-  //       <div className="task-left">
-  //         <h3>
-  //           {!showEditField && <p>{task.name}</p>}
-  //           {showEditField && <input 
-  //             type='text' 
-  //             placeholder={task.name}
-  //             value = {newName} 
-  //             onChange={(e) => setNewName(e.target.value)}
-  //             />}
-  //         </h3>
-  //         <h5>{task.day}</h5>
-  //       </div>
-  //       <div className="task-buttons">
-  //         {!showEditField && <FiMoreHorizontal onClick={() => taskEdit(task.id)}/>}
-  //         {showEditField && <FiCheck onClick={() => taskEditSubmit(task.id)}/>}
-  //         <FiChevronLeft onClick={() => onBackwards(task.id)}/>
-  //         <FiChevronRight onClick={() => onForward(task.id)}/>
-  //         <FiX onClick={() => onDelete(task.id)}/>
-  //       </div>
-  //     </div>
-  //   </div>
-  // }
+  var taskClasses = classNames(
+    'task',
+    {
+      'dragging': isDragging,
+      'overlay': dragOverlay,
+      'reminder': task.reminder
+    }
+  );
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <div 
-        className={`task ${task.reminder ? 'reminder' : ''}`} 
+        className={taskClasses} 
         onDoubleClick={() => onToggle(task.id)}
       >
         <div className="task-left">

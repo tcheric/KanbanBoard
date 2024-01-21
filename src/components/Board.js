@@ -3,7 +3,7 @@ import Task from './Task'
 import {useDroppable} from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, height }) => {
+const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, height }) => {
   const {isOver, setNodeRef} = useDroppable({
     id: id,
       data: {
@@ -40,7 +40,6 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode
                     onDelete={onDelete} 
                     onToggle={onToggle}
                     onEdit={onEdit}
-                    darkMode={darkMode}
                     dragOverlay={false}
                   />
                 ))}

@@ -9,7 +9,6 @@ import Task from "./components/Task"
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [boardHeight, setBoardHeight] = useState(100)
-  const [isDropped, setIsDropped] = useState(false)
   const boardsIds = [0, 1, 2]
   const [activeTask, setActiveTask] = useState(null);
 
@@ -220,76 +219,59 @@ const App = () => {
     updateTasks()
   }
 
-  // const handleDragEnd = event => {  
-  //   console.log(event)
-  //   const {active, over} = event
+  // Drag handler functions
+  const handleDragStart = ( event ) => {
+    if (event.active.data.current?.type === "Column") {
+      return;
+    }
 
-  //   if (over.data.current.type === "Task") {
-  //     console.log("Dropped on task")
-  //     if (getTask(over.id).board === getTask(active.id).board) {
-  //       console.log("It's the same board")
-  //     } else {
-  //       console.log("It's another board")
-  //     }
-  //   } else if (over.data.current.type === "Board") {
-  //     console.log("Dropped on board")
-  //     setIsDropped(true)
-  //     moveToBoard(active.id, event.over.id)
-  //   }
-  // }
-    // Drag handler functions
-    const handleDragStart = ( event ) => {
-      if (event.active.data.current?.type === "Column") {
-        return;
-      }
-  
-      if (event.active.data.current?.type === "Task") {
-        setActiveTask(event.active.data.current.task);
-        return;
-      }
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
     }
-  
-    const handleDragEnd = ( event ) => {
-      console.log(tasks)
-      setActiveTask(null);
-  
-      const { active, over } = event;
-      if (!over) return;
-  
-      const activeId = active.id;
-      const overId = over.id;
-      const overIsTask = over.data.current?.type === "Task";
-      const isOverABoard = over.data.current?.type === "Board";
-  
-      // Im dropping a Task over another Task
-      if (overIsTask) {
-        // This setstate func is called twice, doesn't matter as drag event already ended by 2nd call
-        setTasks((tasks) => {
-          const activeIndex = tasks.findIndex((t) => t.id === activeId);
-          const overIndex = tasks.findIndex((t) => t.id === overId);
-  
-          // Different board
-          if (tasks[activeIndex].board != tasks[overIndex].board) {
-            tasks[activeIndex].board = tasks[overIndex].board;
-            return arrayMove(tasks, activeIndex, overIndex);
-          }
-          // Same board
+  }
+
+  const handleDragEnd = ( event ) => {
+    // console.log(tasks)
+    setActiveTask(null);
+
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+    const overIsTask = over.data.current?.type === "Task";
+    const isOverABoard = over.data.current?.type === "Board";
+
+    // Im dropping a Task over another Task
+    if (overIsTask) {
+      // This setstate func is called twice, doesn't matter as drag event already ended by 2nd call
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const overIndex = tasks.findIndex((t) => t.id === overId);
+
+        // Different board
+        if (tasks[activeIndex].board != tasks[overIndex].board) {
+          tasks[activeIndex].board = tasks[overIndex].board;
           return arrayMove(tasks, activeIndex, overIndex);
-        });
-      }
-  
-      // Im dropping a Task over a Board
-      if (isOverABoard) {
-        setTasks((tasks) => {
-          const activeIndex = tasks.findIndex((t) => t.id === activeId);
-  
-          tasks[activeIndex].board = overId;
-          return arrayMove(tasks, activeIndex, activeIndex);
-        });
-      }
-  
-      return
+        }
+        // Same board
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
     }
+
+    // Im dropping a Task over a Board
+    if (isOverABoard) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+
+        tasks[activeIndex].board = overId;
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
+
+    return
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

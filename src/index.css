@@ -405,6 +405,16 @@ button.modal.selected {
   justify-content: flex-end;
 }
 
+.task.dragging {
+  opacity: 50%;
+  border: 2px solid red;
+}
+
+.task.overlay {
+  /* opacity: 50%; */
+  /* border: 1px solid white; */
+}
+
 /* Add task section */
 
 .add-form {
