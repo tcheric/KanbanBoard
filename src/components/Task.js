@@ -4,7 +4,7 @@ import { useDraggable } from '@dnd-kit/core'
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from '@dnd-kit/utilities';
 
-const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, darkMode}) => {
+const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOverlay}) => {
   const [showEditField, setShowEditField] = useState(false)
   const [newName, setNewName] = useState("")
 

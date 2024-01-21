@@ -4,14 +4,14 @@ import {useDroppable} from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode, onEdit, height }) => {
-  const {isOver, setNodeRef} = useSortable({
+  const {isOver, setNodeRef} = useDroppable({
     id: id,
       data: {
         type:"Board"
       }
   })
   const names = ["To-do:", "Doing:", "Done:"]
-  const taskIds = useState(() => {
+  const taskIds = useMemo(() => {
     return tasks.map((task) => task.id)
   }, [tasks])
   const boardTasks = useState(() => {
@@ -29,8 +29,6 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode
       <div className="flex-child" style={{height: `${height}`}} ref={setNodeRef}>
         <div className="board">
           <h2><u>{names[id]}</u></h2>
-          <button onClick={printBT}>click me</button>
-            {/* <SortableContext> */}
             {tasks.length > 0 ? 
               <SortableContext key={id} items={boardTasks}>
                 {tasks.map((task) => (
@@ -42,15 +40,15 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, darkMode
                     onDelete={onDelete} 
                     onToggle={onToggle}
                     onEdit={onEdit}
-                    darkMode={darkMode}>
-                  </Task>
+                    darkMode={darkMode}
+                    dragOverlay={false}
+                  />
                 ))}
               </SortableContext>
               : (
                 <span>- No tasks -</span>
               )
             }
-            {/* </SortableContext> */}
         </div>
       </div>
   )

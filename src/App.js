@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react'
 import Board from './components/Board'
 import Header from './components/Header'
 import AddTask from './components/AddTask'
-import { DndContext, useSensor, useSensors, KeyboardSensor, PointerSensor, closestCenter } from '@dnd-kit/core'
+import { DndContext, useSensor, useSensors, KeyboardSensor, PointerSensor, closestCenter, DragOverlay } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import Task from "./components/Task"
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [boardHeight, setBoardHeight] = useState(100)
   const [isDropped, setIsDropped] = useState(false)
   const boardsIds = [0, 1, 2]
+  const [activeTask, setActiveTask] = useState(null);
 
   const [tasks, setTasks] = useState(() => {
     const stringTasks = localStorage.getItem("tasks")
@@ -182,11 +184,11 @@ const App = () => {
     updateTasks()
   }
 
-  const sortTasks =  board => { 
+  const sortTasks = id => { 
     if (tasks == null) {
       return []
     } else {
-      const sortedTasks = tasks.filter(item => item.board === board)
+      const sortedTasks = tasks.filter(item => item.board === id)
       return sortedTasks
     }
   }
@@ -209,32 +211,85 @@ const App = () => {
     updateTasks()
   }
 
-  const moveToBoard = (taskId, boardId) => {  
+  const moveToBoard = (taskId, board) => {  
     const updatedTasks = tasks.map(item => {
-      if (item.id === taskId) (item.board = boardId)
+      if (item.id === taskId) (item.board = board)
       return item
     })
     localStorage.setItem("tasks", JSON.stringify(updatedTasks))
     updateTasks()
   }
 
-  const handleDragEnd = event => {  
-    console.log(event)
-    const {active, over} = event
+  // const handleDragEnd = event => {  
+  //   console.log(event)
+  //   const {active, over} = event
 
-    if (over.data.current.type === "Task") {
-      console.log("Dropped on task")
-      if (getTask(over.id).board === getTask(active.id).board) {
-        console.log("It's the same board")
-      } else {
-        console.log("It's another board")
+  //   if (over.data.current.type === "Task") {
+  //     console.log("Dropped on task")
+  //     if (getTask(over.id).board === getTask(active.id).board) {
+  //       console.log("It's the same board")
+  //     } else {
+  //       console.log("It's another board")
+  //     }
+  //   } else if (over.data.current.type === "Board") {
+  //     console.log("Dropped on board")
+  //     setIsDropped(true)
+  //     moveToBoard(active.id, event.over.id)
+  //   }
+  // }
+    // Drag handler functions
+    const handleDragStart = ( event ) => {
+      if (event.active.data.current?.type === "Column") {
+        return;
       }
-    } else if (over.data.current.type === "Board") {
-      console.log("Dropped on board")
-      setIsDropped(true)
-      moveToBoard(active.id, event.over.id)
+  
+      if (event.active.data.current?.type === "Task") {
+        setActiveTask(event.active.data.current.task);
+        return;
+      }
     }
-  }
+  
+    const handleDragEnd = ( event ) => {
+      console.log(tasks)
+      setActiveTask(null);
+  
+      const { active, over } = event;
+      if (!over) return;
+  
+      const activeId = active.id;
+      const overId = over.id;
+      const overIsTask = over.data.current?.type === "Task";
+      const isOverABoard = over.data.current?.type === "Board";
+  
+      // Im dropping a Task over another Task
+      if (overIsTask) {
+        // This setstate func is called twice, doesn't matter as drag event already ended by 2nd call
+        setTasks((tasks) => {
+          const activeIndex = tasks.findIndex((t) => t.id === activeId);
+          const overIndex = tasks.findIndex((t) => t.id === overId);
+  
+          // Different board
+          if (tasks[activeIndex].board != tasks[overIndex].board) {
+            tasks[activeIndex].board = tasks[overIndex].board;
+            return arrayMove(tasks, activeIndex, overIndex);
+          }
+          // Same board
+          return arrayMove(tasks, activeIndex, overIndex);
+        });
+      }
+  
+      // Im dropping a Task over a Board
+      if (isOverABoard) {
+        setTasks((tasks) => {
+          const activeIndex = tasks.findIndex((t) => t.id === activeId);
+  
+          tasks[activeIndex].board = overId;
+          return arrayMove(tasks, activeIndex, activeIndex);
+        });
+      }
+  
+      return
+    }
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -245,7 +300,7 @@ const App = () => {
   )
 
   return (
-    <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCenter}>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors} >
       <div className="header-container">
         <Header 
           toggleAddTask={toggleAddTask} 
@@ -258,12 +313,10 @@ const App = () => {
       </div>
       <div className="board-container">
         {boardsIds.map((id) => (
-          // <SortableContext key={id} items={sortTasks(id)} strategy={verticalListSortingStrategy}>
           <Board 
             key={id} 
             id={id}
             tasks={sortTasks(id)} 
-            // tasks={tasksByBoard[id]} 
             onDelete={deleteTask} 
             onToggle={toggleReminder} 
             onBackwards={moveBackwards} 
@@ -271,9 +324,16 @@ const App = () => {
             onEdit={editTask}
             height={boardHeight}
           />
-          // </SortableContext>
         ))}
       </div>
+      <DragOverlay>
+        {activeTask ? (
+          <Task
+            task={activeTask}
+            dragOverlay={true}
+          />
+        ): null}
+      </DragOverlay>
     </DndContext>
   );
 }
