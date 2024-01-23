@@ -233,6 +233,7 @@ const App = () => {
 
   const handleDragEnd = ( event ) => {
     // console.log(tasks)
+    console.log(event)
     setActiveTask(null);
 
     const { active, over } = event;

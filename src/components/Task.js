@@ -21,6 +21,7 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOv
     setNewName("")
   }
   
+  // DND stuff
   const {
     setNodeRef,
     attributes,
@@ -47,7 +48,7 @@ const Task = ({ task, onDelete, onToggle, onBackwards, onForward, onEdit, dragOv
       'overlay': dragOverlay,
       'reminder': task.reminder
     }
-  );
+  )
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>

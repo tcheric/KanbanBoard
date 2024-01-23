@@ -10,16 +10,56 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
         type:"Board"
       }
   })
-  const names = ["To-do:", "Doing:", "Done:"]
-  const taskIds = useMemo(() => {
-    return tasks.map((task) => task.id)
-  }, [tasks])
-  const boardTasks = useState(() => {
+
+  const [boardTasks, setBoardTasks] = useState(() => {
     return tasks
   })
 
+  const taskIds = useMemo(() => {
+    return tasks.map((task) => task.id)
+  }, [tasks])
+
+
+
+  // Get last sortableId
+
+
+  // tasks prop will always be sorted. 
+  // input tasks which may have sortableIds or not, will 
+  const setSortableIds = ( tasks ) => {
+    // Check if task.sortableIds is set on all tasks in tasks array
+    let allTasksHaveSortableId = true
+    for (const task of tasks) {
+      let hasSortableId = 'sortableId' in task
+      if (!hasSortableId) allTasksHaveSortableId = false 
+    }
+
+    let sorted = true
+    // Check if tasks are already sorted
+    for (let i = 0; i < tasks.length - 1; i++) {
+      if (tasks[i].id > tasks[i+1].id) {
+        sorted = false
+        break
+      }
+    }
+    // If not sorted, sort
+    if (!allTasksHaveSortableId && !sorted) {
+
+    }
+
+    // If sorted already, just apply sortableIds to each task
+
+  }
+
+  // For dragging a task into a board
+  const adjustSortableIds = () => {
+
+  }
+
+  const names = ["To-do:", "Doing:", "Done:"]
+
   const printBT = () => {
-    console.log(boardTasks[0])
+    console.log(boardTasks)
   }
 
   // Issue right now: drag animation not working, cannot reorder within same list, code very obfuscated
@@ -37,7 +77,7 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
                     task={task}
                     onBackwards={onBackwards} 
                     onForward={onForward} 
-                    onDelete={onDelete} 
+                    onDelete={printBT} 
                     onToggle={onToggle}
                     onEdit={onEdit}
                     dragOverlay={false}
