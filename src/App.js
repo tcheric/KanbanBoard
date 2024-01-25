@@ -277,10 +277,36 @@ const App = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 6
+        distance: 8
       },
     }),
   )
+
+  const dragTask = ( taskId, newBoardId, aboveTaskId ) => {
+    // 1. change task.board
+    let draggedTask = getTask(taskId)
+    draggedTask.board = newBoardId
+
+    // 2. calculate new sortableId of task
+
+    if (typeof aboveTaskId === 'undefined') {
+      // Make this tasks's sortableId pre-existing max + 1
+      let maxSortableId = 0
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].board = newBoardId && tasks[i].sortableId > maxSortableId) {
+          maxSortableId = tasks[i].sortableId
+        }
+      }
+      draggedTask.sortableId = maxSortableId + 1
+    } else {
+      // Loop thru all tasks on the board and increment 
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].board = newBoardId && tasks[i].sortableId >= aboveTaskId) {
+          tasks[i].sortableId++
+        }
+      draggedTask.sortableId = aboveTaskId
+      } 
+    }
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors} >
@@ -305,6 +331,7 @@ const App = () => {
             onBackwards={moveBackwards} 
             onForward={moveForward} 
             onEdit={editTask}
+            onDrag={dragTask}
             height={boardHeight}
           />
         ))}
