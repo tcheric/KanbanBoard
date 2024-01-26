@@ -3,7 +3,7 @@ import Task from './Task'
 import {useDroppable} from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, height, onDrag }) => {
+const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, height }) => {
   const {isOver, setNodeRef} = useDroppable({
     id: id,
       data: {
@@ -20,25 +20,6 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
   }, [tasks])
 
   const names = ["To-do:", "Doing:", "Done:"]
-
-  
-  // Get last sortableId
-  const getLastSortableId = () => {
-
-  }
-
-  // This function should probably be in App.js
-  const adjustSortableIds = () => {
-
-  }
-
-  // For dragging a task into a board:
-  // 1. change task.board
-  // 2. calculate new sortableId of task
-  // 2a. move to bottom of board, other tasks unaffected
-  // 2b. move above another task, increment sortableId of tasks below 
-
-
 
 
   const printBT = () => {

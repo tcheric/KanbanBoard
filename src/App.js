@@ -219,6 +219,14 @@ const App = () => {
     updateTasks()
   }
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8
+      },
+    }),
+  )
+
   // Drag handler functions
   const handleDragStart = ( event ) => {
     if (event.active.data.current?.type === "Column") {
@@ -228,6 +236,32 @@ const App = () => {
     if (event.active.data.current?.type === "Task") {
       setActiveTask(event.active.data.current.task);
       return;
+    }
+  }
+
+  const dragTask = ( taskId, newBoardId, aboveTaskId, diffBoard ) => {
+    let draggedTask = getTask(taskId)
+    // 1. change task.board
+    if (diffBoard) {
+      draggedTask.board = newBoardId
+    }
+
+    // 2. calculate new sortableId of task
+    if (typeof aboveTaskId === 'undefined') { // Bottom of board
+      let maxSortableId = 0
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].board = newBoardId && tasks[i].sortableId > maxSortableId) {
+          maxSortableId = tasks[i].sortableId
+        }
+      }
+      draggedTask.sortableId = maxSortableId + 1
+    } else { // Not bottom of board
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].board = newBoardId && tasks[i].sortableId >= aboveTaskId) {
+          tasks[i].sortableId++
+        }
+      draggedTask.sortableId = aboveTaskId
+      } 
     }
   }
 
@@ -270,43 +304,7 @@ const App = () => {
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
-
-    return
   }
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8
-      },
-    }),
-  )
-
-  const dragTask = ( taskId, newBoardId, aboveTaskId ) => {
-    // 1. change task.board
-    let draggedTask = getTask(taskId)
-    draggedTask.board = newBoardId
-
-    // 2. calculate new sortableId of task
-
-    if (typeof aboveTaskId === 'undefined') {
-      // Make this tasks's sortableId pre-existing max + 1
-      let maxSortableId = 0
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board = newBoardId && tasks[i].sortableId > maxSortableId) {
-          maxSortableId = tasks[i].sortableId
-        }
-      }
-      draggedTask.sortableId = maxSortableId + 1
-    } else {
-      // Loop thru all tasks on the board and increment 
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board = newBoardId && tasks[i].sortableId >= aboveTaskId) {
-          tasks[i].sortableId++
-        }
-      draggedTask.sortableId = aboveTaskId
-      } 
-    }
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors} >
