@@ -143,7 +143,19 @@ const App = () => {
     setShowAddTask(!showAddTask)
   }  
   
+  const applyMaxSortableId = (task, board) => {
+    let maxSortableId = 0
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].board === board && tasks[i].sortableId > maxSortableId) {
+        maxSortableId = tasks[i].sortableId
+      }
+    }
+    return task.sortableId = maxSortableId
+  }
+
   const addTask = newTask => {
+    // define new sortableId
+    applyMaxSortableId(newTask, 0)
     const newTaskInArray = (tasks == null) ? [newTask] : [...tasks, newTask]
     localStorage.setItem("tasks", JSON.stringify(newTaskInArray))
     updateTasks()
@@ -250,20 +262,22 @@ const App = () => {
     if (typeof aboveTaskId === 'undefined') { // Bottom of board
       let maxSortableId = 0
       for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board = newBoardId && tasks[i].sortableId > maxSortableId) {
+        if (tasks[i].board === newBoardId && tasks[i].sortableId > maxSortableId) {
           maxSortableId = tasks[i].sortableId
         }
       }
       draggedTask.sortableId = maxSortableId + 1
     } else { // Not bottom of board
       for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board = newBoardId && tasks[i].sortableId >= aboveTaskId) {
+        if (tasks[i].board === newBoardId && tasks[i].sortableId >= aboveTaskId) {
           tasks[i].sortableId++
         }
       draggedTask.sortableId = aboveTaskId
       } 
     }
   }
+
+
 
   const handleDragEnd = ( event ) => {
     // console.log(tasks)
@@ -288,11 +302,15 @@ const App = () => {
         // Different board
         if (tasks[activeIndex].board != tasks[overIndex].board) {
           tasks[activeIndex].board = tasks[overIndex].board;
-          return arrayMove(tasks, activeIndex, overIndex);
+          // dragTask(tasks[activeIndex].id, tasks[overIndex].board, tasks[overIndex].sortableId, true)
+          arrayMove(tasks, activeIndex, overIndex)
+          return
         }
         // Same board
-        return arrayMove(tasks, activeIndex, overIndex);
-      });
+        // dragTask(tasks[activeIndex].id, tasks[overIndex].board, tasks[overIndex].sortableId, false)
+        
+        return arrayMove(tasks, activeIndex, overIndex)
+      })
     }
 
     // Im dropping a Task over a Board

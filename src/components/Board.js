@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import Task from './Task'
 import {useDroppable} from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { ErrorBoundary } from "react-error-boundary"
 
 const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, height }) => {
   const {isOver, setNodeRef} = useDroppable({
@@ -31,6 +32,7 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
       <div className="flex-child" style={{height: `${height}`}} ref={setNodeRef}>
         <div className="board">
           <h2><u>{names[id]}</u></h2>
+          <ErrorBoundary fallback={<div>Something went wrong</div>}>
             {tasks.length > 0 ? 
               <SortableContext key={id} items={boardTasks}>
                 {tasks.map((task) => (
@@ -50,6 +52,7 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
                 <span>- No tasks -</span>
               )
             }
+          </ErrorBoundary>
         </div>
       </div>
   )
