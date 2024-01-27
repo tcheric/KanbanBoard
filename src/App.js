@@ -36,23 +36,6 @@ const App = () => {
     return localStorage.getItem("theme")
   })
 
-  const sortTasksv2 = () => {
-    let arr = [[], [], []]
-    for (const t of tasks){
-      // t.board is boardID, ie. 0, 1, 2, 999(backlog)
-      if (t.board === 0) {
-        arr[0].push(t)
-      } else if (t.board === 1) {
-        arr[1].push(t)
-      }  else if (t.board === 2) {
-        arr[2].push(t)
-      } 
-    } 
-    return arr 
-  }
-
-  const [tasksByBoard, setTasksByBoard] = useState(sortTasksv2)
-
   useEffect(() => {
     const themeFromLS = localStorage.getItem("theme")
     if (themeFromLS === "" || themeFromLS === null) {
@@ -79,6 +62,34 @@ const App = () => {
     resizeObserver.observe(boardElemList[1])
     resizeObserver.observe(boardElemList[2])
   }, [])
+
+  const calculateSortableIds = ( board ) => {
+    console.log(board)
+    // for (const task of tasks) {
+    //   if (task.board)
+    // }
+    let newId = 0
+    const tasksWithSortableId = tasks.map((task) => {
+      if (task.board === board) {
+        task.sortableId = newId
+        newId++
+      }
+    })
+  }
+
+  // SortableId not set case
+    useEffect(() => {
+      let boardsToChange = new Set();
+      for (const task of tasks) {
+        if (Object.hasOwn(task, "sortableId")) {
+          console.log("Task has sortableId!")
+        } else {
+          console.log("No sortableid", task.id)
+          boardsToChange.add(task.board)
+        }
+      }
+    boardsToChange.forEach(calculateSortableIds)
+    }, [])
 
   const updateTasks = () => {
     const stringTasks = localStorage.getItem("tasks")
@@ -150,7 +161,7 @@ const App = () => {
         maxSortableId = tasks[i].sortableId
       }
     }
-    return task.sortableId = maxSortableId
+    return task.sortableId = maxSortableId + 1
   }
 
   const addTask = newTask => {
@@ -344,7 +355,7 @@ const App = () => {
             tasks={sortTasks(id)} 
             onDelete={deleteTask} 
             onToggle={toggleReminder} 
-            onBackwards={moveBackwards} 
+            onBackwards={()=>{console.log(tasks)}} 
             onForward={moveForward} 
             onEdit={editTask}
             onDrag={dragTask}

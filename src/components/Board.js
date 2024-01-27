@@ -27,21 +27,26 @@ const Board = ({ id, tasks, onDelete, onToggle, onBackwards, onForward, onEdit, 
     console.log(boardTasks)
   }
 
+  const logError = (error, info) => {
+    // Do something with the error, e.g. log to an external API
+    console.log(error, info)
+  };
+
   // Working on implementing board move case
   return (
       <div className="flex-child" style={{height: `${height}`}} ref={setNodeRef}>
         <div className="board">
           <h2><u>{names[id]}</u></h2>
-          <ErrorBoundary fallback={<div>Something went wrong</div>}>
+          <ErrorBoundary fallback={<div>Something went wrong</div>} onError={logError}>
             {tasks.length > 0 ? 
               <SortableContext key={id} items={boardTasks}>
                 {tasks.map((task) => (
                   <Task 
-                    key={task.id}
+                    key={task.sortableId}
                     task={task}
                     onBackwards={onBackwards} 
-                    onForward={onForward} 
-                    onDelete={printBT} 
+                    onForward={printBT} 
+                    onDelete={onDelete} 
                     onToggle={onToggle}
                     onEdit={onEdit}
                     dragOverlay={false}
