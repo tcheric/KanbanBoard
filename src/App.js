@@ -65,9 +65,6 @@ const App = () => {
 
   const calculateSortableIds = ( board ) => {
     console.log(board)
-    // for (const task of tasks) {
-    //   if (task.board)
-    // }
     let newId = 0
     const tasksWithSortableId = tasks.map((task) => {
       if (task.board === board) {
@@ -75,6 +72,7 @@ const App = () => {
         newId++
       }
     })
+    setTasks(tasksWithSortableId)
   }
 
   // SortableId not set case
@@ -95,7 +93,6 @@ const App = () => {
     const stringTasks = localStorage.getItem("tasks")
     const tasksFromLocal = JSON.parse(stringTasks)
     setTasks(tasksFromLocal)
-    // setTasksByBoard()
   }
 
   const changeTheme = newTheme => {
@@ -165,7 +162,6 @@ const App = () => {
   }
 
   const addTask = newTask => {
-    // define new sortableId
     applyMaxSortableId(newTask, 0)
     const newTaskInArray = (tasks == null) ? [newTask] : [...tasks, newTask]
     localStorage.setItem("tasks", JSON.stringify(newTaskInArray))
@@ -192,7 +188,6 @@ const App = () => {
   const getTask = id => {
     return tasks.find((item) => item.id === id)
   }
-
 
   const toggleReminder = id => {
     const updatedTasks = tasks.map(item => {
@@ -262,33 +257,45 @@ const App = () => {
     }
   }
 
-  const dragTask = ( taskId, newBoardId, aboveTaskId, diffBoard ) => {
-    let draggedTask = getTask(taskId)
-    // 1. change task.board
+  const dragTask = ( taskId, newBoardId, diffBoard, aboveTaskId ) => {
+    let tasksWithNewBoard
+    let tasksWithNewId
     if (diffBoard) {
-      draggedTask.board = newBoardId
+      // 1. change the dragged task to the new board (Immutable) 
+      tasksWithNewBoard = tasks.map(item => {
+        if (item.id === taskId) item.board = newBoardId
+        return item
+      })
+    } else {
+      tasksWithNewBoard = tasks
     }
 
     // 2. calculate new sortableId of task
     if (typeof aboveTaskId === 'undefined') { // Bottom of board
+      // Find maxSortableId and set draggedTask.sortableId to max+1
       let maxSortableId = 0
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board === newBoardId && tasks[i].sortableId > maxSortableId) {
-          maxSortableId = tasks[i].sortableId
+      tasksWithNewBoard.forEach(item => {
+        if (item.board === newBoardId && item.sortableId > maxSortableId) {
+          maxSortableId = item.sortableId
         }
-      }
-      draggedTask.sortableId = maxSortableId + 1
+      })
+      tasksWithNewId = tasksWithNewBoard.map(item => {
+        if (item.id === taskId) item.sortableId = maxSortableId + 1
+        return item
+      })
     } else { // Not bottom of board
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].board === newBoardId && tasks[i].sortableId >= aboveTaskId) {
-          tasks[i].sortableId++
+      // Set draggedTask to aboveTaskId, increment all tasks below it
+      tasksWithNewId = tasksWithNewBoard.map(item => {
+        if (item.id === taskId) {
+          item.sortableId = aboveTaskId
+        } else if (item.board === newBoardId && item.sortableId >= aboveTaskId) {
+          item.sortableId++
+          return item
         }
-      draggedTask.sortableId = aboveTaskId
-      } 
-    }
+      })
+    } 
+    setTasks(tasksWithNewId)
   }
-
-
 
   const handleDragEnd = ( event ) => {
     // console.log(tasks)
@@ -319,7 +326,6 @@ const App = () => {
         }
         // Same board
         // dragTask(tasks[activeIndex].id, tasks[overIndex].board, tasks[overIndex].sortableId, false)
-        
         return arrayMove(tasks, activeIndex, overIndex)
       })
     }
