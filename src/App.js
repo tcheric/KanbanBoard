@@ -80,9 +80,9 @@ const App = () => {
       let boardsToChange = new Set();
       for (const task of tasks) {
         if (Object.hasOwn(task, "sortableId")) {
-          console.log("Task has sortableId!")
+          // console.log("Task has sortableId!")
         } else {
-          console.log("No sortableid", task.id)
+          // console.log("No sortableid", task.id)
           boardsToChange.add(task.board)
         }
       }
@@ -205,6 +205,7 @@ const App = () => {
     if (tasks == null) {
       return []
     } else {
+      console.log(tasks)
       const sortedTasks = tasks.filter(item => item.board === id)
       return sortedTasks
     }
@@ -320,12 +321,12 @@ const App = () => {
         // Different board
         if (tasks[activeIndex].board != tasks[overIndex].board) {
           tasks[activeIndex].board = tasks[overIndex].board;
-          // dragTask(tasks[activeIndex].id, tasks[overIndex].board, tasks[overIndex].sortableId, true)
+          // dragTask(tasks[activeIndex].id, tasks[overIndex].board, true, tasks[overIndex].sortableId)
           arrayMove(tasks, activeIndex, overIndex)
           return
         }
         // Same board
-        // dragTask(tasks[activeIndex].id, tasks[overIndex].board, tasks[overIndex].sortableId, false)
+        // dragTask(tasks[activeIndex].id, tasks[overIndex].board, false, tasks[overIndex].sortableId)
         return arrayMove(tasks, activeIndex, overIndex)
       })
     }
@@ -364,7 +365,7 @@ const App = () => {
             onBackwards={()=>{console.log(tasks)}} 
             onForward={moveForward} 
             onEdit={editTask}
-            onDrag={dragTask}
+            // onDrag={dragTask}
             height={boardHeight}
           />
         ))}
